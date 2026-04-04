@@ -1,0 +1,320 @@
+:root {
+    --bg-color: #050505;
+    --border-color: rgba(255, 255, 255, 0.08);
+    --text-primary: #f0f0f0;
+    --text-secondary: #9aa0a6;
+    
+    /* Finance Palette */
+    --accent-finance: #00df89;
+    --bg-finance: rgba(0, 223, 137, 0.03);
+    --card-finance: rgba(0, 223, 137, 0.08);
+    
+    /* Sports Palette */
+    --accent-sports: #ff7b00;
+    --bg-sports: rgba(255, 123, 0, 0.03);
+    --card-sports: rgba(255, 123, 0, 0.08);
+    
+    /* War Palette */
+    --accent-war: #ff3366;
+    --bg-war: rgba(255, 51, 102, 0.03);
+    --card-war: rgba(255, 51, 102, 0.08);
+    
+    /* AI Palette */
+    --accent-ai: #00bfff;
+    --bg-ai: rgba(0, 191, 255, 0.03);
+    --card-ai: rgba(0, 191, 255, 0.08);
+    
+    /* Crypto Palette */
+    --accent-crypto: #9d4edd;
+    --bg-crypto: rgba(157, 78, 221, 0.03);
+    --card-crypto: rgba(157, 78, 221, 0.08);
+    
+    --font-heading: 'Outfit', sans-serif;
+    --font-body: 'Inter', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.background-effects {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.glow {
+    position: absolute;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    filter: blur(140px);
+    opacity: 0.15;
+    animation: float 20s infinite alternate ease-in-out;
+}
+
+.finance-glow { top: -10%; left: -10%; background: var(--accent-finance); }
+.sports-glow { top: -10%; right: -10%; background: var(--accent-sports); animation-delay: -5s; }
+.war-glow { bottom: -10%; left: -10%; background: var(--accent-war); animation-delay: -10s; }
+.ai-glow { bottom: -10%; right: -10%; background: var(--accent-ai); animation-delay: -15s; }
+.crypto-glow { top: 40%; left: 40%; background: var(--accent-crypto); animation-delay: -7s; }
+
+@keyframes float {
+    0% { transform: translateY(0) scale(1); }
+    100% { transform: translateY(100px) scale(1.1); }
+}
+
+.app-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 4rem;
+    background: rgba(5, 5, 5, 0.7);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo-container h1 {
+    font-family: var(--font-heading);
+    font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.logo-container .dot {
+    color: var(--accent-ai);
+}
+
+.logo-container p {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 0.2rem;
+}
+
+.time-container {
+    text-align: right;
+}
+
+.clock {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+.date {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.dashboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    padding: 3rem 4rem;
+}
+
+.topic-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    border-radius: 16px;
+    border: 1px solid var(--border-color);
+    backdrop-filter: blur(10px);
+}
+
+#section-finance { background-color: var(--bg-finance); border-color: rgba(0, 223, 137, 0.15); }
+#section-sports { background-color: var(--bg-sports); border-color: rgba(255, 123, 0, 0.15); }
+#section-war { background-color: var(--bg-war); border-color: rgba(255, 51, 102, 0.15); }
+#section-ai { background-color: var(--bg-ai); border-color: rgba(0, 191, 255, 0.15); }
+#section-crypto { background-color: var(--bg-crypto); border-color: rgba(157, 78, 221, 0.15); }
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.section-header h2 {
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+#section-finance .section-header { border-bottom-color: rgba(0, 223, 137, 0.3); }
+#section-sports .section-header { border-bottom-color: rgba(255, 123, 0, 0.3); }
+#section-war .section-header { border-bottom-color: rgba(255, 51, 102, 0.3); }
+#section-ai .section-header { border-bottom-color: rgba(0, 191, 255, 0.3); }
+#section-crypto .section-header { border-bottom-color: rgba(157, 78, 221, 0.3); }
+
+.live-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: currentColor;
+    animation: pulse 2s infinite;
+}
+
+#section-finance .live-indicator { color: var(--accent-finance); box-shadow: 0 0 10px var(--accent-finance); }
+#section-sports .live-indicator { color: var(--accent-sports); box-shadow: 0 0 10px var(--accent-sports); }
+#section-war .live-indicator { color: var(--accent-war); box-shadow: 0 0 10px var(--accent-war); }
+#section-ai .live-indicator { color: var(--accent-ai); box-shadow: 0 0 10px var(--accent-ai); }
+#section-crypto .live-indicator { color: var(--accent-crypto); box-shadow: 0 0 10px var(--accent-crypto); }
+
+@keyframes pulse {
+    0% { transform: scale(0.95); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(0.95); opacity: 0.5; }
+}
+
+.news-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.article-card {
+    border-radius: 12px;
+    padding: 1.25rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+#list-finance .article-card { background: var(--card-finance); border-color: rgba(0, 223, 137, 0.2); }
+#list-sports .article-card { background: var(--card-sports); border-color: rgba(255, 123, 0, 0.2); }
+#list-war .article-card { background: var(--card-war); border-color: rgba(255, 51, 102, 0.2); }
+#list-ai .article-card { background: var(--card-ai); border-color: rgba(0, 191, 255, 0.2); }
+#list-crypto .article-card { background: var(--card-crypto); border-color: rgba(157, 78, 221, 0.2); }
+
+.article-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+#list-finance .article-card::before { background: var(--accent-finance); }
+#list-sports .article-card::before { background: var(--accent-sports); }
+#list-war .article-card::before { background: var(--accent-war); }
+#list-ai .article-card::before { background: var(--accent-ai); }
+#list-crypto .article-card::before { background: var(--accent-crypto); }
+
+.article-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+    background: rgba(30, 30, 35, 0.8);
+}
+
+.article-card:hover::before {
+    opacity: 1;
+}
+
+.article-rank {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    font-size: 3rem;
+    font-weight: 800;
+    color: rgba(255,255,255,0.03);
+    font-family: var(--font-heading);
+    transition: color 0.3s ease;
+}
+
+.article-card:hover .article-rank {
+    color: rgba(255,255,255,0.08);
+}
+
+.article-time {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.article-title {
+    font-size: 1.05rem;
+    font-weight: 500;
+    line-height: 1.4;
+    margin-bottom: 0.5rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.article-source {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+@media (max-width: 1400px) {
+    .dashboard {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .dashboard {
+        grid-template-columns: 1fr;
+        padding: 2rem;
+    }
+    .app-header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+        padding: 1.5rem;
+    }
+    .time-container {
+        text-align: center;
+    }
+}

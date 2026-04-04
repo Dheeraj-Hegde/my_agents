@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Pulse News | Live Updates",
+  "version": "1.0",
+  "description": "Premium hourly updates tailored for Finance, Sports, Global Conflict, tech AI & Crypto",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Pulse News"
+  },
+  "host_permissions": [
+    "https://*.yahoo.com/*",
+    "https://*.espn.com/*",
+    "https://*.bbci.co.uk/*",
+    "https://techcrunch.com/*",
+    "https://cointelegraph.com/*"
+  ]
+}

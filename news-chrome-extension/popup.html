@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pulse News | Chrome Extension</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-effects">
+        <div class="glow finance-glow"></div>
+        <div class="glow ai-glow"></div>
+    </div>
+    
+    <header class="app-header">
+        <div class="logo-container">
+            <h1>PULSE<span class="dot">.</span></h1>
+            <p>Live Hourly Updates</p>
+        </div>
+        <div class="time-container">
+            <div id="clock" class="clock">--:--:--</div>
+        </div>
+    </header>
+
+    <div class="tabs">
+        <button class="tab-btn active finance-tab" data-target="finance">Finance</button>
+        <button class="tab-btn sports-tab" data-target="sports">Sports</button>
+        <button class="tab-btn war-tab" data-target="war">War</button>
+        <button class="tab-btn ai-tab" data-target="ai">AI</button>
+        <button class="tab-btn crypto-tab" data-target="crypto">Crypto</button>
+    </div>
+
+    <main class="dashboard">
+        <section class="topic-section active-section grid-layout" id="section-finance">
+            <div class="news-list" id="list-finance"></div>
+        </section>
+        
+        <section class="topic-section grid-layout" id="section-sports">
+            <div class="news-list" id="list-sports"></div>
+        </section>
+        
+        <section class="topic-section grid-layout" id="section-war">
+            <div class="news-list" id="list-war"></div>
+        </section>
+        
+        <section class="topic-section grid-layout" id="section-ai">
+            <div class="news-list" id="list-ai"></div>
+        </section>
+        
+        <section class="topic-section grid-layout" id="section-crypto">
+            <div class="news-list" id="list-crypto"></div>
+        </section>
+    </main>
+
+    <script src="popup.js"></script>
+</body>
+</html>
