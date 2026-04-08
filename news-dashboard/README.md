@@ -2,6 +2,9 @@
 
 <img src="./news_dashboard_demo.webp" alt="Dashboard Demonstration Video" width="100%">
 
+### 🎬 Detailed Walkthrough Demo
+<img src="./pulse_news_demo.webp" alt="Pulse News Dashboard — Detailed Captioned Walkthrough" width="100%">
+
 A premium, full-width web dashboard that displays live hourly top 10 news updates across 5 curated categories simultaneously. Designed with a gorgeous, fluid grid layout and responsive background glow effects.
 
 ### 🌟 Key Features
