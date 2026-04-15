@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triply</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <header>
+            <h1>Triply</h1>
+            <p>Your intelligent companion for creating perfect journeys.</p>
+        </header>
+
+        <main>
+            <section class="form-section-container">
+                <form id="trip-form">
+                    <div class="form-group-wrapper">
+                        <div class="form-section-header">
+                            <h3>📍 Trip Basics</h3>
+                            <div class="card-line"></div>
+                        </div>
+                        <div class="form-grid-3">
+                            <div class="input-group">
+                                <label for="destination">Where do you want to go?</label>
+                                <input type="text" id="destination" placeholder="e.g., Kyoto, Japan" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="duration">Number of Days</label>
+                                <input type="number" id="duration" placeholder="e.g., 5" min="1" max="60" required>
+                            </div>
+                            <div class="input-group">
+                                <label for="season">Planned Season</label>
+                                <select id="season" required>
+                                    <option value="current">Best Time</option>
+                                    <option value="spring">Spring</option>
+                                    <option value="summer">Summer</option>
+                                    <option value="autumn">Autumn</option>
+                                    <option value="winter">Winter</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group-wrapper">
+                        <div class="form-section-header">
+                            <h3>🎭 Travel Style</h3>
+                            <div class="card-line"></div>
+                        </div>
+                        <div class="form-grid-2">
+                            <div class="input-group">
+                                <label for="travel_type">Preferred Travel Type</label>
+                                <select id="travel_type" required>
+                                    <option value="">Select a travel type...</option>
+                                    <option value="backpacker">Backpacker / Budget</option>
+                                    <option value="luxury">Luxury / High-end</option>
+                                    <option value="family">Family / Kid-Friendly</option>
+                                    <option value="romantic">Romantic / Honeymoon</option>
+                                    <option value="adventure">Adventure / Active</option>
+                                    <option value="cultural">Cultural / Historical</option>
+                                    <option value="relaxing">Relaxing / Beach</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <label for="interests">What are your interests?</label>
+                                <textarea id="interests" placeholder="e.g., museums, hiking, local food" rows="1"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="submit-container">
+                        <button type="submit" id="generate-btn">
+                            <span>🚀 Generate My Perfect Plan</span>
+                            <div class="loader" id="btn-loader"></div>
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="results-section hidden" id="results-section">
+                <div class="result-card" id="itinerary-card">
+                    <div class="card-header">
+                        <h2>✈️ Trip Itinerary</h2>
+                    </div>
+                    <div id="itinerary-output" class="markdown-body"></div>
+                </div>
+
+                <div class="result-card" id="budget-card">
+                    <div class="card-header">
+                        <h2>💰 Estimated Budget</h2>
+                    </div>
+                    <div id="budget-output" class="markdown-body"></div>
+                </div>
+
+                <div class="result-card" id="guide-card">
+                    <div class="card-header">
+                        <h2>🗺️ Travel Guide</h2>
+                    </div>
+                    <div id="guide-output" class="markdown-body"></div>
+                </div>
+            </section>
+
+            <div id="error-message" class="error-banner hidden"></div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

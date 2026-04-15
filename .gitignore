@@ -1,0 +1,30 @@
+# API Keys and Secrets
+.env
+
+# Diagnostic Scripts
+test_connection.py
+list_models.py
+find_audio_models.py
+
+# Sub-repositories / Folders
+Trip-planner/
+
+# Python environment and caches
+__pycache__/
+*.pyc
+.venv/
+env/
+venv/
+
+# Video production temporary files
+narration.pcm
+narration.wav
+dashboard_demo.mp4
+preview.png
+VIDEO_PRODUCTION_GUIDE.md
+dashboard_demo.webp
+dashboard_demo.srt
+
+# IDE settings
+.vscode/
+.idea/
