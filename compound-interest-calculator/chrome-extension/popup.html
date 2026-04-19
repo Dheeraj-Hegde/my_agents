@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="icon-container">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" class="header-icon">
+          <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
+          <polyline points="16 7 22 7 22 13"></polyline>
+        </svg>
+      </div>
+      <h2>Wealth<span class="highlight">AI</span></h2>
+      <p class="subtitle">Smart Compound Calculator</p>
+    </div>
+
+    <div class="form-grid">
+      <div class="input-group">
+        <input type="number" id="amount" value="1000" placeholder=" " required>
+        <label>Principal ($)</label>
+      </div>
+      <div class="input-group">
+        <input type="number" id="rate" value="5" step="0.1" placeholder=" " required>
+        <label>Annual Rate (%)</label>
+      </div>
+      <div class="input-group">
+        <input type="number" id="years" value="10" placeholder=" " required>
+        <label>Years</label>
+      </div>
+      <div class="input-group">
+        <input type="number" id="addition" value="100" placeholder=" " required>
+        <label>Additional ($)</label>
+      </div>
+      <div class="input-group">
+        <select id="addition-freq" required>
+          <option value="none">None</option>
+          <option value="monthly" selected>Monthly</option>
+          <option value="quarterly">Quarterly</option>
+          <option value="yearly">Yearly</option>
+        </select>
+        <label>Add Frequency</label>
+      </div>
+    </div>
+
+    <button id="calcBtn" class="primary-btn">
+      <span class="btn-text">Calculate with AI</span>
+      <div class="loader" id="loader"></div>
+    </button>
+
+    <div id="result-container" class="result-container hidden">
+      <div class="result-glow"></div>
+      <div id="result" class="result-content"></div>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+
+</html>

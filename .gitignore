@@ -8,6 +8,7 @@ find_audio_models.py
 
 # Sub-repositories / Folders
 Trip-planner/
+First_agent/
 
 # Python environment and caches
 __pycache__/
@@ -24,6 +25,12 @@ preview.png
 VIDEO_PRODUCTION_GUIDE.md
 dashboard_demo.webp
 dashboard_demo.srt
+convert_demo.py
+create_demo_video.py
+llm_activity.log
+narrate_video.py
+narration_script.txt
+generate_voiceover.py
 
 # IDE settings
 .vscode/

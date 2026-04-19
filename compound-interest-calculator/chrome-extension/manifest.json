@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "name": "AI Interest Calculator",
+  "version": "1.0",
+  "description": "Calculate interest using Gemini LLM",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "storage"
+  ]
+}
