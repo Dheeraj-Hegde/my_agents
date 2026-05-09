@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency AI Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.321.0/dist/umd/lucide.min.js"></script>
+</head>
+
+<body>
+    <div class="background-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <div class="app-container">
+        <header>
+            <div class="logo">
+                <i data-lucide="coins" class="logo-icon"></i>
+                <h1>Curr<span>AI</span></h1>
+            </div>
+            <div class="status">
+                <span class="pulse"></span>
+                MCP Tool Connected
+            </div>
+        </header>
+
+        <main>
+            <div class="dashboard-grid">
+                <!-- Left Panel: Info & Quick Actions -->
+                <div class="panel info-panel">
+                    <h2>Live Insights</h2>
+                    <p>Ask our AI about any currency conversion. It uses real-time MCP tools to fetch the latest market
+                        rates.</p>
+
+                    <div class="supported-currencies">
+                        <h3>Trending Rates (USD)</h3>
+                        <div class="rate-item"><span>EUR</span><span class="rate-val" id="usd-eur">...</span></div>
+                        <div class="rate-item"><span>GBP</span><span class="rate-val" id="usd-gbp">...</span></div>
+                        <div class="rate-item"><span>INR</span><span class="rate-val" id="usd-inr">...</span></div>
+                    </div>
+                </div>
+
+                <!-- Right Panel: AI Chat Dashboard -->
+                <div class="panel chat-panel">
+                    <div class="chat-header">
+                        <i data-lucide="bot"></i>
+                        <span>Gemma 4 AI Assistant</span>
+                    </div>
+
+                    <div class="chat-history" id="chatHistory">
+                        <div class="message assistant">
+                            <div class="avatar"><i data-lucide="sparkles"></i></div>
+                            <div class="text">Hello! I'm your AI currency expert. Ask me to convert any currency, or
+                                inquire about current market trends. How can I help you today?</div>
+                        </div>
+                    </div>
+
+                    <div class="chat-input-container">
+                        <input type="text" id="userInput" placeholder="Convert 100 USD to EUR..." autocomplete="off">
+                        <button id="sendBtn">
+                            <i data-lucide="send"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <p>&copy; 2026 CurrAI Dashboard • Powered by Gemini & MCP</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>

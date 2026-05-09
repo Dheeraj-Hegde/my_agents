@@ -1,0 +1,9 @@
+python-dotenv
+google-genai
+prefab_ui
+mcp[cli]
+pillow
+requests
+pyautogui
+numpy
+moviepy
