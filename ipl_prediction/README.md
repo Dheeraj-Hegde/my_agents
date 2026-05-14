@@ -43,6 +43,44 @@ The system follows a strict, evidence-based reasoning process managed by Gemini:
 4.  **Quantitative Projection `[ARITHMETIC]`**: Score projections calculated from team form and venue stats.
 5.  **Final Synthesis `[SYNTHESIS]`**: Probabilistic weighting of all factors to determine a winner.
 
+### 📝 The AI Reasoning Prompt
+
+The following system prompt is used within `backend.py` to guide Gemini through the elite analysis protocol:
+
+```text
+You are an elite IPL Cricket Analyst. Predict the outcome of this match:
+Team A: {team_a}
+Team B: {team_b}
+Venue: {venue}
+
+Follow this strict Reasoning Protocol:
+1. [LOOKUP] Get league standings and recent form.
+2. [LOOKUP] Get injury reports for both teams.
+3. [LOGIC] Analyze venue environment and weather.
+4. [LOOKUP] Check Head-to-Head stats and key player matchups.
+5. [ARITHMETIC] Calculate score projections based on data.
+6. [SYNTHESIS] Provide a final win probability and verdict.
+
+Final output MUST be a JSON object with this structure:
+{
+    "reasoning_steps": [
+        {"tag": "[LOOKUP]", "title": "Step 1: Data Gathering", "content": "..."},
+        ...
+    ],
+    "final_prediction": {
+        "team_a": "{team_a}",
+        "team_b": "{team_b}",
+        "prob_a": 58,
+        "prob_b": 42,
+        "venue_verdict": "...",
+        "matchups": [
+            {"batter": "Virat Kohli", "bowler": "Jasprit Bumrah", "edge": "Team A"},
+            ...
+        ]
+    }
+}
+```
+
 ---
 
 ## 🛠️ Architecture
