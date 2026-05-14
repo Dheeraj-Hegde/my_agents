@@ -9,6 +9,8 @@ find_audio_models.py
 # Sub-repositories / Folders
 Trip-planner/
 First_agent/
+videos/
+course-planner/
 
 # Python environment and caches
 __pycache__/
@@ -31,6 +33,11 @@ llm_activity.log
 narrate_video.py
 narration_script.txt
 generate_voiceover.py
+test_gemma.py
+ipl_voiceover.wav
+GOOGLE.md
+record_ipl_demo.py
+test_prefab_app.py
 
 # IDE settings
 .vscode/

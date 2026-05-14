@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPL Match Predictor | Elite Analytics</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="dark-theme">
+    <div class="background-glow"></div>
+    
+    <header>
+        <div class="logo">
+            <span class="ipl-accent">IPL</span> ANALYTICA <span class="version">v2.0</span>
+        </div>
+        <div class="status-badge">
+            <span class="pulse"></span> LIVE MARKET DATA
+        </div>
+        <div class="gemini-badge">
+            <span class="sparkle">✨</span> Powered by Gemini
+        </div>
+    </header>
+
+    <main>
+        <section class="prediction-controls">
+            <div class="control-group glass">
+                <h3>Match Configuration</h3>
+                <div class="input-grid">
+                    <div class="field">
+                        <label>Team A</label>
+                        <input type="text" id="team-a" list="teams-list" placeholder="e.g. RCB" value="RCB">
+                    </div>
+                    <div class="vs-circle">VS</div>
+                    <div class="field">
+                        <label>Team B</label>
+                        <input type="text" id="team-b" list="teams-list" placeholder="e.g. MI" value="MI">
+                    </div>
+                </div>
+                <datalist id="teams-list">
+                    <option value="RCB">Royal Challengers Bengaluru</option>
+                    <option value="MI">Mumbai Indians</option>
+                    <option value="CSK">Chennai Super Kings</option>
+                    <option value="KKR">Kolkata Knight Riders</option>
+                    <option value="RR">Rajasthan Royals</option>
+                    <option value="SRH">Sunrisers Hyderabad</option>
+                    <option value="LSG">Lucknow Super Giants</option>
+                    <option value="DC">Delhi Capitals</option>
+                    <option value="PBKS">Punjab Kings</option>
+                    <option value="GT">Gujarat Titans</option>
+                </datalist>
+                <div class="field full-width">
+                    <label>Venue</label>
+                        <select id="venue">
+                            <option value="" disabled selected>Loading venues...</option>
+                        </select>
+                </div>
+                <button id="run-prediction" class="primary-btn">
+                    <span class="btn-text">Generate Prediction</span>
+                    <span class="btn-icon">⚡</span>
+                </button>
+            </div>
+        </section>
+
+        <section id="results-section" class="hidden">
+            <div class="reasoning-protocol glass">
+                <h3>Reasoning Protocol <span class="tag">Chain of Thought</span></h3>
+                <div id="reasoning-steps" class="steps-container">
+                    <!-- Steps will be injected here -->
+                </div>
+            </div>
+
+            <div class="dashboard-final glass">
+                <div class="dashboard-header">
+                    <h2>Win Probability Engine</h2>
+                    <div id="confidence-meter" class="confidence medium">Confidence: <span>Medium</span></div>
+                </div>
+
+                <div class="win-probability-section">
+                    <div class="battle-meta">
+                        <div class="team-info left">
+                            <span class="team-abbrev" id="prob-team-a">RCB</span>
+                            <span class="team-chance" id="perc-a">50%</span>
+                        </div>
+                        <div class="vs-badge-small">VS</div>
+                        <div class="team-info right">
+                            <span class="team-chance" id="perc-b">50%</span>
+                            <span class="team-abbrev" id="prob-team-b">MI</span>
+                        </div>
+                    </div>
+                    <div class="dual-prob-bar">
+                        <div id="prob-bar-a" class="bar-part left" style="width: 50%;"></div>
+                        <div id="prob-bar-b" class="bar-part right" style="width: 50%;"></div>
+                    </div>
+                    <div class="verdict-banner">
+                        <span class="verdict-label">AI VERDICT:</span>
+                        <span id="ai-verdict-text" class="verdict-highlight">Team A is slightly favored due to chasing advantage.</span>
+                    </div>
+                </div>
+
+                <div class="dashboard-grid">
+                    <div class="card glass-sub">
+                        <h4><span class="icon">🏟️</span> Venue Verdict</h4>
+                        <p id="venue-verdict-text">Loading insights...</p>
+                    </div>
+                    <div class="card glass-sub">
+                        <h4><span class="icon">🎯</span> Key Matchups</h4>
+                        <div class="matchup-table-wrapper">
+                            <table id="matchup-table">
+                                <thead>
+                                    <tr>
+                                        <th>Batter</th>
+                                        <th>Bowler</th>
+                                        <th>Edge</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Matchups injected here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="loader" class="loader-overlay hidden">
+        <div class="loader-content">
+            <div class="spinner"></div>
+            <p>Gathering Real-time Data...</p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
