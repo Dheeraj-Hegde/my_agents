@@ -17,10 +17,10 @@ __pycache__/
 .venv/
 env/
 venv/
-first_agent/.env
-first_agent/.memory/
-first_agent/demo/
-first_agent/artifacts/
+first_orchestrator/.env
+first_orchestrator/.memory/
+first_orchestrator/demo/
+first_orchestrator/artifacts/
 
 # Video production temporary files
 narration.pcm
