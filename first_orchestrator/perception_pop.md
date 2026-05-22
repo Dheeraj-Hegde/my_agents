@@ -26,7 +26,10 @@ NOT skip the REASONING block.
   3. SELF_CHECK: verify your assessment. Did you invent any goals the
      user didn't ask for? Did you mark a goal done without concrete
      evidence? Did you preserve URLs/paths verbatim? Are the goal ids
-     unchanged from PRIOR GOALS?
+     unchanged from PRIOR GOALS? For any goal with an explicit
+     quantity (top N, each, all N), did you actually COUNT the
+     matching tool_outcomes in HISTORY and confirm count >= N before
+     marking done?
 
 # Your task
 1. If PRIOR GOALS is empty, decompose the QUERY into goals.
@@ -37,8 +40,19 @@ NOT skip the REASONING block.
      goal_id, OR a tool_outcome whose result clearly satisfies the
      goal.
    - A goal is NOT done if no history entry addresses it yet.
+   - COUNT RULE for multi-item goals: when the goal text specifies a
+     quantity (e.g. 'top 3 results', 'read 5 pages', 'fetch each of
+     the N urls', 'for all results'), the goal is done ONLY when
+     HISTORY contains AT LEAST that many successful tool_outcome
+     entries of the appropriate fetch/read tool under that goal_id.
+     A single fetch_url tool_outcome does NOT satisfy a 'fetch top 3'
+     goal — count them. An [answer] entry alone does NOT satisfy a
+     multi-item goal until the required number of tool_outcomes are
+     also present; if the count is short, keep the goal OPEN so the
+     agent issues more tool calls on the next iteration.
 4. Identify which artifact (if any) should be attached to the next
-   unfinished goal.
+   unfinished goal. Use the artifact_id from a memory hit or a prior
+   action result that is relevant.
 
 # Goal decomposition rules (when PRIOR GOALS is empty)
 - Each goal describes WHAT the user wants, not HOW to do it.
@@ -46,10 +60,33 @@ NOT skip the REASONING block.
   other concrete locator, you MUST preserve it verbatim in the goal
   text.
 - Only split into multiple goals when the user explicitly asks for
-  multiple INDEPENDENT deliverables.
+  multiple INDEPENDENT deliverables (e.g. 'save X AND create Y AND
+  summarise Z').
 - ALWAYS split a query into two goals when it requires both (a)
-  fetching/reading an external resource, and (b) extracting,
-  summarising, or answering based on that fetched content.
+  fetching/reading an external resource (URL, file, API), and (b)
+  extracting, summarising, or answering based on that fetched content.
+  Goal 1 = the fetch (preserve the URL/path verbatim); Goal 2 = the
+  answer derived from the fetched content.
+- ALWAYS split a 'search-then-read' query into SEPARATE goals: one
+  goal for the web_search (with NO quantity in its text, e.g. 'Search
+  the web for X'), and a SECOND goal for reading the result URLs that
+  carries the quantity verbatim (e.g. 'Read the top 3 result URLs
+  from the search'). Do NOT bundle the search and the per-result
+  fetches into a single goal — they use different tools and have
+  different done conditions (search is done after 1 web_search; the
+  read goal is done only after N fetch_url tool_outcomes).
+- ONLY create a separate 'read the result URLs' goal when the user
+  EXPLICITLY asks to read, open, follow, fetch, summarise, or extract
+  details FROM the individual result pages (e.g. 'read the top 3
+  results', 'open each link', 'summarise each article'). If the user
+  only asks to 'find N items', 'list N options', 'get N suggestions',
+  'recommend N places', etc., a SINGLE web_search with max_results=N
+  is enough — do NOT add a fetch_url goal. Snippets/titles from
+  web_search already answer those queries.
+- A bare quantity in the query (e.g. 'find 3 things', 'suggest 5
+  restaurants', 'show me 4 options') is NOT a trigger for the
+  read-URLs goal. The trigger is an explicit verb of reading/opening/
+  fetching applied to the results.
 - Never exceed 5 goals. Keep each goal under 140 chars.
 
 # Output format (STRICT, machine-parsed)
@@ -88,9 +125,11 @@ Then output ONLY a single JSON object with these fields:
 (C) multiple independent deliverables → DECOMPOSE, 2 goals.
 (D) fetch + answer → DECOMPOSE, always 2 goals with URL preserved
     verbatim in goal 1.
+(E) multi-item goal, count not yet satisfied → EVALUATE, keep the
+    read-URLs goal OPEN until N fetch_url tool_outcomes exist.
 ```
 
-(See [perception.py](perception.py) for the full text with all four
+(See [perception.py](perception.py) for the full text with all five
 worked examples.)
 
 #### Rubric evaluation — perception prompt
