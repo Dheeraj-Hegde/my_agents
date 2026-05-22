@@ -124,19 +124,25 @@ fallbacks).
 
 
 
-Query 1 Screenshot 
+### Query 1 Screenshot
 
-![alt text](image.png)
+![Query 1](screenshots/query1.jpg)
 
-Query 2 Screenshot
+### Query 2 Screenshot
 
-![alt text](image-2.png)
+![Query 2](screenshots/query2.jpg)
 
-Query 3 Screenshot
+### Query 3 Screenshot
 
-![alt text](image-3.png)
+![Query 3 — run 1](screenshots/query3run1.jpg)
 
-![alt text](image-4.png)
+![Query 3 — run 2](screenshots/query3run2.jpg)
 
+### Query 4 screenshot
+
+![Query 4](screenshots/query4.jpg)
+
+
+### Youtube Video demo link
 
 https://youtu.be/WcB9ws4tulw
