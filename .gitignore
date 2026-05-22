@@ -8,7 +8,6 @@ find_audio_models.py
 
 # Sub-repositories / Folders
 Trip-planner/
-First_agent/
 videos/
 course-planner/
 
@@ -18,6 +17,10 @@ __pycache__/
 .venv/
 env/
 venv/
+first_agent/.env
+first_agent/.memory/
+first_agent/demo/
+first_agent/artifacts/
 
 # Video production temporary files
 narration.pcm

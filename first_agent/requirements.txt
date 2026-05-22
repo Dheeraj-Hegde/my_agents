@@ -1,0 +1,6 @@
+ddgs
+crawl4ai
+tavily
+fastapi
+mcp
+pydantic
