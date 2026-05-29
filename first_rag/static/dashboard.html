@@ -1,0 +1,427 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Earnings Call Analyst · Dashboard</title>
+<style>
+  :root {
+    --bg: #0d1117; --panel: #161b22; --panel2: #0b1018; --border: #30363d;
+    --text: #c9d1d9; --muted: #8b949e; --green: #3fb950; --red: #f85149;
+    --blue: #58a6ff; --yellow: #d29922; --accent: #a371f7;
+  }
+  * { box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text);
+    font: 14px -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    margin: 0; padding: 0; }
+  header { padding: 14px 20px; border-bottom: 1px solid var(--border);
+    display: flex; justify-content: space-between; align-items: center; }
+  header h1 { margin: 0; font-size: 18px; font-weight: 600; }
+  header h1 .v { color: var(--accent); }
+  header nav a { color: var(--blue); margin-left: 16px; text-decoration: none; font-size: 13px; }
+  header nav a:hover { text-decoration: underline; }
+  main { padding: 20px; max-width: 1600px; margin: 0 auto; }
+  h2 { font-size: 14px; text-transform: uppercase; letter-spacing: 0.5px;
+    color: var(--muted); margin: 24px 0 10px; font-weight: 600; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .split { display: grid; grid-template-columns: 1.4fr 1fr; gap: 16px; align-items: start; margin-top: 16px; }
+  @media (max-width: 1100px) { .split { grid-template-columns: 1fr; } }
+  @media (max-width: 900px) { .grid2 { grid-template-columns: 1fr; } }
+  .card { background: var(--panel); border: 1px solid var(--border);
+    border-radius: 6px; padding: 14px; }
+  .card .label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); }
+  .card .value { font-size: 26px; font-weight: 600; margin-top: 4px; }
+  .card .sub { font-size: 12px; color: var(--muted); margin-top: 4px; }
+  .badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px;
+    background: #21262d; color: var(--muted); }
+  .pill { padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 500; }
+  .pill.ok  { background: rgba(63,185,80,0.15); color: var(--green); }
+  .pill.err { background: rgba(248,81,73,0.15); color: var(--red); }
+  .pill.warn{ background: rgba(210,153,34,0.15); color: var(--yellow); }
+  input, textarea, select {
+    background: var(--panel2); border: 1px solid var(--border); color: var(--text);
+    padding: 8px 10px; border-radius: 4px; font: 13px ui-monospace, SFMono-Regular, monospace;
+    width: 100%;
+  }
+  textarea { resize: vertical; min-height: 80px; }
+  label { display: block; font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.5px; color: var(--muted); margin: 8px 0 4px; }
+  button {
+    background: var(--blue); border: none; color: white; padding: 8px 16px;
+    border-radius: 4px; font-size: 13px; cursor: pointer; font-weight: 500;
+  }
+  button:hover { background: #3a8cf2; }
+  button:disabled { background: #30363d; color: var(--muted); cursor: not-allowed; }
+  button.accent { background: var(--accent); }
+  button.accent:hover { background: #8b5cf6; }
+  .out {
+    margin-top: 10px; padding: 12px; background: var(--panel2);
+    border: 1px solid var(--border); border-radius: 4px;
+    white-space: pre-wrap; font: 12px ui-monospace, monospace;
+    min-height: 40px; max-height: 360px; overflow: auto;
+  }
+  .out.empty { color: var(--muted); font-style: italic; }
+  .row { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  .controls { display: flex; gap: 10px; margin-top: 10px; align-items: center; flex-wrap: wrap; }
+  .controls .grow { flex: 1; }
+  .stat-strip { display: flex; gap: 24px; padding: 14px 18px; background: var(--panel);
+    border: 1px solid var(--border); border-radius: 6px; flex-wrap: wrap; }
+  .stat-strip .item .label { font-size: 11px; text-transform: uppercase;
+    letter-spacing: 0.5px; color: var(--muted); }
+  .stat-strip .item .value { font-size: 18px; font-weight: 600; margin-top: 2px; }
+  .log {
+    background: var(--panel2); border: 1px solid var(--border); border-radius: 6px;
+    padding: 10px; max-height: 280px; overflow: auto; font: 12px ui-monospace, monospace;
+  }
+  .log .entry { padding: 6px 0; border-bottom: 1px dashed var(--border); }
+  .log .entry:last-child { border-bottom: none; }
+  .log .ts { color: var(--muted); margin-right: 8px; }
+  .log .tag { padding: 1px 6px; border-radius: 3px; font-size: 10px; margin-right: 6px; font-weight: 600; }
+  .log .tag.ingest { background: rgba(163,113,247,0.18); color: var(--accent); }
+  .log .tag.ask    { background: rgba(88,166,255,0.18); color: var(--blue); }
+  .log .tag.err    { background: rgba(248,81,73,0.18); color: var(--red); }
+  .log .msg { color: var(--text); }
+  details { background: var(--panel2); border: 1px solid var(--border);
+    border-radius: 4px; padding: 6px 10px; margin-top: 8px; }
+  details summary { cursor: pointer; color: var(--muted); font-size: 12px; }
+  details[open] summary { color: var(--text); margin-bottom: 6px; }
+  code { font: 12px ui-monospace, monospace; color: var(--accent); }
+  .ids-sample { color: var(--muted); font: 11px ui-monospace, monospace; word-break: break-all; }
+  .file-item { border: 1px solid var(--border); border-radius: 4px;
+    margin-bottom: 6px; background: var(--panel2); overflow: hidden; }
+  .file-row { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 0; }
+  .file-row:hover { background: rgba(255,255,255,0.03); }
+  .file-row input[type=checkbox] { width: auto; margin: 0; }
+  .file-row label { display: inline; margin: 0; text-transform: none; letter-spacing: 0;
+    color: var(--text); font: 12px ui-monospace, monospace; cursor: pointer; flex: 1; }
+  .file-row .badge-indexed { font-size: 10px; padding: 1px 6px; border-radius: 3px;
+    background: rgba(63,185,80,0.15); color: var(--green); }
+  .file-row .size { font-size: 10px; color: var(--muted); font-family: ui-monospace, monospace; }
+  .file-row .toggle { background: transparent; border: 1px solid var(--border);
+    color: var(--muted); font-size: 10px; padding: 2px 6px; border-radius: 3px;
+    cursor: pointer; font-weight: 500; }
+  .file-row .toggle:hover { color: var(--text); border-color: var(--muted); background: transparent; }
+  .file-preview { display: none; padding: 8px 12px 10px; border-top: 1px dashed var(--border);
+    font: 11px ui-monospace, SFMono-Regular, monospace; color: var(--muted);
+    white-space: pre-wrap; overflow: hidden;
+    background: rgba(0,0,0,0.18); }
+  .file-item.open .file-preview { display: block; }
+  .file-preview .meta { color: var(--accent); font-size: 10px;
+    text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; display: block; }
+  .spinner { display: inline-block; width: 12px; height: 12px;
+    border: 2px solid var(--muted); border-top-color: var(--accent);
+    border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-right: 6px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+<header>
+  <h1>� Earnings Call <span class="v">Analyst</span></h1>
+  <nav>
+    <span id="health-pill" class="pill warn">checking…</span>
+    <a href="/docs">API docs</a>
+    <a href="http://localhost:8101/" target="_blank">Gateway</a>
+  </nav>
+</header>
+
+<main>
+
+  <div class="split">
+
+  <section class="card">
+    <div class="row">
+      <h2 style="margin: 0;">Ingest documents</h2>
+      <span class="badge">POST /ingest</span>
+    </div>
+    <p style="color: var(--muted); font-size: 12px; margin: 6px 0 4px;">
+      Browse <code>sandbox/</code>, peek at file contents, pick what you want, and index.
+      Already-indexed files are marked and pre-deselected. Re-running is safe.
+    </p>
+    <input type="hidden" id="ingest-root" value="earnings_call" />
+    <input type="hidden" id="ingest-exts" value=".md,.txt" />
+    <button id="browse-btn" style="display:none;">Browse</button>
+
+    <label style="margin-top: 14px;">
+      Files
+      <span id="file-count" style="color: var(--muted); text-transform: none; letter-spacing: 0; font-size: 11px; margin-left: 6px;"></span>
+      <span style="float: right;">
+        <a href="#" id="select-all" style="color: var(--blue); text-decoration: none; font-size: 11px; margin-left: 10px;">select all</a>
+        <a href="#" id="select-none" style="color: var(--blue); text-decoration: none; font-size: 11px; margin-left: 10px;">none</a>
+        <a href="#" id="select-new" style="color: var(--blue); text-decoration: none; font-size: 11px; margin-left: 10px;">only new</a>
+        <a href="#" id="expand-all" style="color: var(--blue); text-decoration: none; font-size: 11px; margin-left: 10px;">expand all</a>
+        <a href="#" id="collapse-all" style="color: var(--blue); text-decoration: none; font-size: 11px; margin-left: 10px;">collapse</a>
+      </span>
+    </label>
+    <div id="file-list" class="out empty" style="max-height: 560px;">Click <b>Browse</b> to list files.</div>
+
+    <div class="controls">
+      <button id="ingest-btn" class="accent">▶ Index selected</button>
+      <span id="ingest-status" style="color: var(--muted); font-size: 12px;"></span>
+    </div>
+    <div id="ingest-out" class="out empty">No ingest run yet.</div>
+  </section>
+
+  <section class="card">
+    <div class="row">
+      <h2 style="margin: 0;">Ask the analyst</h2>
+      <span class="badge">POST /ask</span>
+    </div>
+    <p style="color: var(--muted); font-size: 12px; margin: 6px 0 4px;">
+      Ask about revenue, guidance, segment growth, margins, or management commentary.
+      The analyst retrieves the most relevant transcript passages before answering.
+    </p>
+    <label>Question</label>
+    <textarea id="ask-q" placeholder="What did Microsoft say about cloud growth in their Q2 FY26 earnings call?" style="min-height: 120px;"></textarea>
+    <div class="controls">
+      <button id="ask-btn">▶ Ask analyst</button>
+      <span id="ask-status" style="color: var(--muted); font-size: 12px;"></span>
+    </div>
+    <div id="ask-out" class="out empty" style="max-height: 520px;">No question asked yet.</div>
+  </section>
+
+  </div>
+
+  <h2>Research log <span style="float:right; font-size: 11px; text-transform: none; letter-spacing: 0; color: var(--muted);">client-side only — clears on reload</span></h2>
+  <div id="log" class="log"><div style="color: var(--muted); font-style: italic;">No activity yet.</div></div>
+
+</main>
+
+<script>
+const $ = (id) => document.getElementById(id);
+
+async function api(method, path, body) {
+  const opts = { method, headers: { "Content-Type": "application/json" } };
+  if (body !== undefined) opts.body = JSON.stringify(body);
+  const r = await fetch(path, opts);
+  const text = await r.text();
+  let data; try { data = JSON.parse(text); } catch { data = text; }
+  if (!r.ok) throw new Error(typeof data === "string" ? data : (data.detail || JSON.stringify(data)));
+  return data;
+}
+
+function ts() {
+  const d = new Date();
+  return d.toLocaleTimeString();
+}
+
+function logEntry(tag, msg) {
+  const log = $("log");
+  if (log.querySelector("div[style*='italic']")) log.innerHTML = "";
+  const el = document.createElement("div");
+  el.className = "entry";
+  el.innerHTML = `<span class="ts">${ts()}</span><span class="tag ${tag}">${tag.toUpperCase()}</span><span class="msg"></span>`;
+  el.querySelector(".msg").textContent = msg;
+  log.prepend(el);
+}
+
+async function refreshStatus() {
+  try {
+    const h = await api("GET", "/health");
+    const pill = $("health-pill");
+    if (h.gateway_up) { pill.className = "pill ok"; pill.textContent = "gateway up"; }
+    else              { pill.className = "pill err"; pill.textContent = "gateway down"; }
+  } catch (e) {
+    const pill = $("health-pill");
+    pill.className = "pill err"; pill.textContent = "unreachable";
+  }
+  try {
+    const s = await api("GET", "/status");
+  } catch (e) { /* ignore */ }
+}
+
+async function doIngest() {
+  const checked = Array.from(document.querySelectorAll("#file-list input[type=checkbox]:checked"))
+    .map(cb => cb.value);
+  if (!checked.length) {
+    $("ingest-out").className = "out";
+    $("ingest-out").textContent = "No files selected. Click Browse and pick at least one file.";
+    return;
+  }
+  const out = $("ingest-out");
+  const btn = $("ingest-btn");
+  const status = $("ingest-status");
+  out.className = "out"; out.textContent = "";
+  btn.disabled = true; status.innerHTML = '<span class="spinner"></span>indexing… (this can take a while)';
+  logEntry("ingest", `${checked.length} file(s)`);
+  try {
+    const r = await api("POST", "/ingest", { files: checked });
+    const errLines = (r.errors && r.errors.length)
+      ? `\n\nErrors:\n${r.errors.map(e => "  " + e.path + ": " + e.error).join("\n")}`
+      : "";
+    out.textContent =
+      `Files: ${r.file_count}\n` +
+      `Chunks indexed: ${r.chunks_indexed}\n` +
+      `New vectors: ${r.new_vectors}\n` +
+      `Index: ${r.index_before.size} → ${r.index_after.size}\n\n` +
+      `Files:\n${r.files.map(f => "  " + f).join("\n")}` +
+      errLines;
+    logEntry("ingest", `done — ${r.new_vectors} new vectors (${r.file_count} files)`);
+    refreshStatus();
+    doBrowse();  // refresh indexed badges
+  } catch (e) {
+    out.textContent = "ERROR: " + e.message;
+    logEntry("err", "ingest: " + e.message);
+  } finally {
+    btn.disabled = false; status.textContent = "";
+  }
+}
+
+async function doBrowse() {
+  const root = $("ingest-root").value.trim() || ".";
+  const exts = $("ingest-exts").value.trim() || ".md,.txt";
+  const list = $("file-list");
+  list.className = "out"; list.innerHTML = '<span class="spinner"></span>loading…';
+  try {
+    const r = await api("GET", `/sandbox/files?root=${encodeURIComponent(root)}&extensions=${encodeURIComponent(exts)}`);
+    if (!r.files.length) {
+      list.className = "out empty";
+      list.textContent = "No files match.";
+      $("file-count").textContent = "";
+      return;
+    }
+    list.innerHTML = "";
+    r.files.forEach((f, i) => {
+      const item = document.createElement("div");
+      item.className = "file-item";
+      item.dataset.path = f.path;
+      item.dataset.indexed = f.indexed ? "1" : "0";
+
+      const row = document.createElement("div");
+      row.className = "file-row";
+      const id = `f${i}`;
+      const cb = document.createElement("input");
+      cb.type = "checkbox"; cb.id = id; cb.value = f.path; cb.checked = !f.indexed;
+      const lbl = document.createElement("label");
+      lbl.htmlFor = id; lbl.textContent = f.path.split("/").pop(); lbl.title = f.path;
+      const size = document.createElement("span");
+      size.className = "size"; size.textContent = fmtSize(f.size || 0);
+      const toggle = document.createElement("button");
+      toggle.className = "toggle"; toggle.textContent = "preview"; toggle.type = "button";
+
+      row.appendChild(cb);
+      row.appendChild(lbl);
+      row.appendChild(size);
+      if (f.indexed) {
+        const b = document.createElement("span");
+        b.className = "badge-indexed"; b.textContent = "indexed";
+        row.appendChild(b);
+      }
+      row.appendChild(toggle);
+
+      const preview = document.createElement("div");
+      preview.className = "file-preview";
+      preview.textContent = "click 'preview' to load file content…";
+
+      toggle.addEventListener("click", (e) => {
+        e.stopPropagation();
+        togglePreview(item, preview, toggle, f.path);
+      });
+
+      item.appendChild(row);
+      item.appendChild(preview);
+      list.appendChild(item);
+    });
+    const newCount = r.files.filter(f => !f.indexed).length;
+    $("file-count").textContent = `${r.files.length} total · ${newCount} new`;
+  } catch (e) {
+    list.className = "out";
+    list.textContent = "ERROR: " + e.message;
+  }
+}
+
+function setSelection(mode) {
+  document.querySelectorAll("#file-list .file-row").forEach(row => {
+    const cb = row.querySelector("input[type=checkbox]");
+    const indexed = !!row.querySelector(".badge-indexed");
+    if (mode === "all") cb.checked = true;
+    else if (mode === "none") cb.checked = false;
+    else if (mode === "new") cb.checked = !indexed;
+  });
+}
+
+function fmtSize(n) {
+  if (n < 1024) return n + " B";
+  if (n < 1024 * 1024) return (n / 1024).toFixed(1) + " KB";
+  return (n / 1024 / 1024).toFixed(2) + " MB";
+}
+
+async function togglePreview(item, preview, toggle, path) {
+  const isOpen = item.classList.contains("open");
+  if (isOpen) {
+    item.classList.remove("open");
+    toggle.textContent = "preview";
+    return;
+  }
+  item.classList.add("open");
+  toggle.textContent = "hide";
+  if (item.dataset.loaded === "1") return;
+  preview.innerHTML = '<span class="spinner"></span>loading…';
+  try {
+    const r = await api("GET", `/sandbox/file?path=${encodeURIComponent(path)}&max_bytes=8000`);
+    const meta = document.createElement("span");
+    meta.className = "meta";
+    meta.textContent = `${fmtSize(r.size)} · showing first ${fmtSize(r.bytes_returned)}${r.truncated ? " (truncated)" : ""}`;
+    const body = document.createElement("span");
+    const lines = r.content.split(/\r?\n/);
+    const shown = lines.slice(0, 10).join("\n");
+    body.textContent = shown + (lines.length > 10 ? "\n…" : "");
+    preview.innerHTML = "";
+    preview.appendChild(meta);
+    preview.appendChild(body);
+    item.dataset.loaded = "1";
+  } catch (e) {
+    preview.textContent = "ERROR: " + e.message;
+  }
+}
+
+function expandAll(open) {
+  document.querySelectorAll("#file-list .file-item").forEach(item => {
+    const toggle = item.querySelector(".toggle");
+    const preview = item.querySelector(".file-preview");
+    const path = item.dataset.path;
+    const isOpen = item.classList.contains("open");
+    if (open && !isOpen) togglePreview(item, preview, toggle, path);
+    else if (!open && isOpen) togglePreview(item, preview, toggle, path);
+  });
+}
+
+async function doAsk() {
+  const q = $("ask-q").value.trim();
+  if (!q) return;
+  const out = $("ask-out");
+  const btn = $("ask-btn");
+  const status = $("ask-status");
+  out.className = "out"; out.textContent = "";
+  btn.disabled = true; status.innerHTML = '<span class="spinner"></span>thinking…';
+  logEntry("ask", q.slice(0, 100));
+  try {
+    const r = await api("POST", "/ask", { question: q });
+    out.textContent = r.answer;
+    logEntry("ask", "answered (" + r.answer.length + " chars)");
+    refreshStatus();
+  } catch (e) {
+    out.textContent = "ERROR: " + e.message;
+    logEntry("err", "ask: " + e.message);
+  } finally {
+    btn.disabled = false; status.textContent = "";
+  }
+}
+
+$("ask-btn").addEventListener("click", doAsk);
+$("ingest-btn").addEventListener("click", doIngest);
+$("browse-btn").addEventListener("click", doBrowse);
+$("select-all").addEventListener("click", (e) => { e.preventDefault(); setSelection("all"); });
+$("select-none").addEventListener("click", (e) => { e.preventDefault(); setSelection("none"); });
+$("select-new").addEventListener("click", (e) => { e.preventDefault(); setSelection("new"); });
+$("expand-all").addEventListener("click", (e) => { e.preventDefault(); expandAll(true); });
+$("collapse-all").addEventListener("click", (e) => { e.preventDefault(); expandAll(false); });
+$("ask-q").addEventListener("keydown", (e) => {
+  if (e.key === "Enter" && (e.ctrlKey || e.metaKey)) { e.preventDefault(); doAsk(); }
+});
+
+refreshStatus();
+setInterval(refreshStatus, 15000);
+doBrowse();
+</script>
+</body>
+</html>

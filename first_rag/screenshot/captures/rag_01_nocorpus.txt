@@ -1,0 +1,21 @@
+PS> # index wiped: state\index.faiss and state\index_ids.json removed
+PS> uv run agent7.py "How much Blackwell and Rubin revenue does NVIDIA have visibility to through the end of calendar year 2026?"
+
+[mcp] loaded 3 tools: ['get_time', 'currency_convert', 'search_knowledge']
+
+══════════════════════════════════════════════════════════════════════════════
+run nocorpus-01  ─  query: Answer ONLY using the indexed knowledge base via the search_knowledge tool. Do not browse the web. ... Question: How much Blackwell and Rubin revenue does NVIDIA have visibility to through the end of calendar year 2026?
+══════════════════════════════════════════════════════════════════════════════
+
+─── iter 1 ─────────────────────────────────────────────
+[memory.read]   0 hits
+[perception]    ○ plan: call search_knowledge for NVIDIA Blackwell + Rubin revenue visibility
+[action]        search_knowledge(query="NVIDIA Blackwell Rubin revenue visibility CY2026", k=5)
+[tool.result]   [] (0 chunks ≥ SEARCH_MIN_SCORE = 0.5)
+[decision]      ANSWER: I could not find any details about that in the knowledge base.
+
+[done] fallback path triggered (empty retrieval)
+
+══════════════════════════════════════════════════════════════════════════════
+FINAL: I could not find any details about that in the knowledge base.
+══════════════════════════════════════════════════════════════════════════════

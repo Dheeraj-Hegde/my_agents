@@ -1,0 +1,21 @@
+PS> # index wiped: state\index.faiss and state\index_ids.json removed
+PS> uv run agent7.py "Which oil major suspended its share buyback program to strengthen its balance sheet, and what is its new net debt target range?"
+
+[mcp] loaded 3 tools: ['get_time', 'currency_convert', 'search_knowledge']
+
+══════════════════════════════════════════════════════════════════════════════
+run nocorpus-02  ─  query: Answer ONLY using the indexed knowledge base via the search_knowledge tool. Do not browse the web. ... Question: Which oil major suspended its share buyback program to strengthen its balance sheet, and what is its new net debt target range?
+══════════════════════════════════════════════════════════════════════════════
+
+─── iter 1 ─────────────────────────────────────────────
+[memory.read]   0 hits
+[perception]    ○ plan: call search_knowledge for oil major suspending buyback + net debt target
+[action]        search_knowledge(query="oil major suspended share buyback net debt target", k=5)
+[tool.result]   [] (0 chunks ≥ SEARCH_MIN_SCORE = 0.5)
+[decision]      ANSWER: I could not find any details about that in the knowledge base.
+
+[done] fallback path triggered (empty retrieval)
+
+══════════════════════════════════════════════════════════════════════════════
+FINAL: I could not find any details about that in the knowledge base.
+══════════════════════════════════════════════════════════════════════════════

@@ -21,6 +21,10 @@ first_orchestrator/.env
 first_orchestrator/.memory/
 first_orchestrator/demo/
 first_orchestrator/artifacts/
+first_rag/.env
+first_rag/screenshot/narration/
+first_rag/screenshot/demo/
+first_rag/screenshot/screens/
 
 # Video production temporary files
 narration.pcm
