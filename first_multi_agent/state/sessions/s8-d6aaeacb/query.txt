@@ -1,0 +1,1 @@
+Independently look up three unrelated facts and report all three: (1) the boiling point of water at sea level in degrees Celsius, (2) the speed of light in vacuum in metres per second, and (3) the height of Mount Everest above sea level in metres.

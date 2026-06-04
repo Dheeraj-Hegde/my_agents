@@ -1,0 +1,1 @@
+Read /nonexistent/path.txt and tell me what's in it.

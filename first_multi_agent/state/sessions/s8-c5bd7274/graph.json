@@ -1,0 +1,243 @@
+{
+  "directed": true,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "skill": "planner",
+      "inputs": [
+        "USER_QUERY"
+      ],
+      "metadata": {},
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "planner",
+        "output": {
+          "rationale": "The user requested a translation of a specific phrase into three different languages, requiring parallel translation nodes.",
+          "nodes": [
+            {
+              "skill": "translator",
+              "inputs": [
+                "USER_QUERY"
+              ],
+              "metadata": {
+                "label": "t1",
+                "target_language": "French"
+              }
+            },
+            {
+              "skill": "translator",
+              "inputs": [
+                "USER_QUERY"
+              ],
+              "metadata": {
+                "label": "t2",
+                "target_language": "Spanish"
+              }
+            },
+            {
+              "skill": "translator",
+              "inputs": [
+                "USER_QUERY"
+              ],
+              "metadata": {
+                "label": "t3",
+                "target_language": "German"
+              }
+            },
+            {
+              "skill": "formatter",
+              "inputs": [
+                "n:t1",
+                "n:t2",
+                "n:t3"
+              ],
+              "metadata": {
+                "label": "out"
+              }
+            }
+          ]
+        },
+        "artifacts": [],
+        "successors": [
+          {
+            "skill": "translator",
+            "inputs": [
+              "USER_QUERY"
+            ],
+            "metadata": {
+              "label": "t1",
+              "target_language": "French"
+            }
+          },
+          {
+            "skill": "translator",
+            "inputs": [
+              "USER_QUERY"
+            ],
+            "metadata": {
+              "label": "t2",
+              "target_language": "Spanish"
+            }
+          },
+          {
+            "skill": "translator",
+            "inputs": [
+              "USER_QUERY"
+            ],
+            "metadata": {
+              "label": "t3",
+              "target_language": "German"
+            }
+          },
+          {
+            "skill": "formatter",
+            "inputs": [
+              "n:t1",
+              "n:t2",
+              "n:t3"
+            ],
+            "metadata": {
+              "label": "out"
+            }
+          }
+        ],
+        "cost": 0.0,
+        "elapsed_s": 3.314523458480835,
+        "provider": "gemini",
+        "error": null
+      },
+      "_result_typed": true,
+      "id": "n:1"
+    },
+    {
+      "skill": "translator",
+      "inputs": [
+        "USER_QUERY"
+      ],
+      "metadata": {
+        "label": "t1",
+        "target_language": "French"
+      },
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "translator",
+        "output": {
+          "translated_text": "",
+          "source_language": "English",
+          "target_language": "French, Spanish, German",
+          "notes": "Multiple target languages requested; ambiguous for a single translation output."
+        },
+        "artifacts": [],
+        "successors": [],
+        "cost": 0.0,
+        "elapsed_s": 5.81046462059021,
+        "provider": "groq",
+        "error": null
+      },
+      "_result_typed": true,
+      "id": "n:2"
+    },
+    {
+      "skill": "translator",
+      "inputs": [
+        "USER_QUERY"
+      ],
+      "metadata": {
+        "label": "t2",
+        "target_language": "Spanish"
+      },
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "translator",
+        "output": {
+          "translated_text": "Fran\u00e7ais : \u00ab Le savoir est le pouvoir, mais l'enthousiasme actionne l'interrupteur. \u00bb\nEspagnol : \u00ab El conocimiento es poder, pero el entusiasmo acciona el interruptor. \u00bb\nAllemand : \u00ab Wissen ist Macht, aber Begeisterung legt den Schalter um. \u00bb",
+          "source_language": "English",
+          "target_language": "French, Spanish, and German",
+          "notes": "The request specified three target languages; all three have been provided in the translated_text field."
+        },
+        "artifacts": [],
+        "successors": [],
+        "cost": 0.0,
+        "elapsed_s": 5.824467420578003,
+        "provider": "gemini",
+        "error": null
+      },
+      "_result_typed": true,
+      "id": "n:3"
+    },
+    {
+      "skill": "translator",
+      "inputs": [
+        "USER_QUERY"
+      ],
+      "metadata": {
+        "label": "t3",
+        "target_language": "German"
+      },
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "translator",
+        "output": {
+          "translated_text": "",
+          "source_language": "English",
+          "target_language": "French, Spanish, and German",
+          "notes": "Ambiguous target: multiple languages requested; this skill processes one target language at a time."
+        },
+        "artifacts": [],
+        "successors": [],
+        "cost": 0.0,
+        "elapsed_s": 6.442439556121826,
+        "provider": "cerebras",
+        "error": null
+      },
+      "_result_typed": true,
+      "id": "n:4"
+    },
+    {
+      "skill": "formatter",
+      "inputs": [
+        "n:2",
+        "n:3",
+        "n:4"
+      ],
+      "metadata": {
+        "label": "out"
+      },
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "formatter",
+        "output": {
+          "final_answer": "Here is the translation of 'Knowledge is power, but enthusiasm pulls the switch.' into French, Spanish, and German:\n\n- French: \u00ab Le savoir est le pouvoir, mais l'enthousiasme actionne l'interrupteur. \u00bb\n- Spanish: \u00ab El conocimiento es poder, pero el entusiasmo acciona el interruptor. \u00bb\n- German: \u00ab Wissen ist Macht, aber Begeisterung legt den Schalter um. \u00bb"
+        },
+        "artifacts": [],
+        "successors": [],
+        "cost": 0.0,
+        "elapsed_s": 2.9250054359436035,
+        "provider": "gemini",
+        "error": null
+      },
+      "_result_typed": true,
+      "id": "n:5"
+    }
+  ],
+  "edges": [
+    {
+      "source": "n:2",
+      "target": "n:5"
+    },
+    {
+      "source": "n:3",
+      "target": "n:5"
+    },
+    {
+      "source": "n:4",
+      "target": "n:5"
+    }
+  ]
+}

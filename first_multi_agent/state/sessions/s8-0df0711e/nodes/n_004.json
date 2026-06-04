@@ -1,0 +1,23 @@
+{
+  "node_id": "n:4",
+  "skill": "researcher",
+  "status": "failed",
+  "inputs": [
+    "n:1"
+  ],
+  "result": {
+    "success": false,
+    "agent_name": "researcher",
+    "output": {},
+    "artifacts": [],
+    "successors": [],
+    "cost": 0.0,
+    "elapsed_s": 0.0,
+    "provider": "",
+    "error": "exception: ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)"
+  },
+  "prompt_sent": "(exception before prompt-render)",
+  "started_at": 1780217247.9974759,
+  "completed_at": 1780217247.9974759,
+  "retries": 0
+}

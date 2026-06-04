@@ -1,0 +1,478 @@
+{
+  "directed": true,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "skill": "planner",
+      "inputs": [
+        "USER_QUERY"
+      ],
+      "metadata": {},
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "planner",
+        "output": {
+          "rationale": "The user requested a specific extraction pipeline from a URL; since the memory hits do not contain information about Alan Turing, I must use the researcher to fetch the content, then the distiller to extract the required fields, and finally a critic to ensure the JSON structure is correct before formatting.",
+          "nodes": [
+            {
+              "skill": "researcher",
+              "inputs": [
+                "https://en.wikipedia.org/wiki/Alan_Turing"
+              ],
+              "metadata": {
+                "label": "fetch_turing"
+              }
+            },
+            {
+              "skill": "distiller",
+              "inputs": [
+                "n:fetch_turing"
+              ],
+              "metadata": {
+                "label": "extract_fields"
+              }
+            },
+            {
+              "skill": "critic",
+              "inputs": [
+                "n:extract_fields"
+              ],
+              "metadata": {
+                "label": "validate_json",
+                "question": "Does the output contain exactly these four fields: birth_date, death_date, doctoral_advisor, paper_1936_title?"
+              }
+            },
+            {
+              "skill": "formatter",
+              "inputs": [
+                "n:validate_json"
+              ],
+              "metadata": {
+                "label": "final_output"
+              }
+            }
+          ]
+        },
+        "artifacts": [],
+        "successors": [
+          {
+            "skill": "researcher",
+            "inputs": [
+              "https://en.wikipedia.org/wiki/Alan_Turing"
+            ],
+            "metadata": {
+              "label": "fetch_turing"
+            }
+          },
+          {
+            "skill": "distiller",
+            "inputs": [
+              "n:fetch_turing"
+            ],
+            "metadata": {
+              "label": "extract_fields"
+            }
+          },
+          {
+            "skill": "critic",
+            "inputs": [
+              "n:extract_fields"
+            ],
+            "metadata": {
+              "label": "validate_json",
+              "question": "Does the output contain exactly these four fields: birth_date, death_date, doctoral_advisor, paper_1936_title?"
+            }
+          },
+          {
+            "skill": "formatter",
+            "inputs": [
+              "n:validate_json"
+            ],
+            "metadata": {
+              "label": "final_output"
+            }
+          }
+        ],
+        "cost": 0.0,
+        "elapsed_s": 3.7432258129119873,
+        "provider": "gemini",
+        "error": null
+      },
+      "_result_typed": true,
+      "id": "n:1"
+    },
+    {
+      "skill": "researcher",
+      "inputs": [
+        "n:1"
+      ],
+      "metadata": {
+        "label": "fetch_turing"
+      },
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "researcher",
+        "output": {
+          "question": "Fetch https://en.wikipedia.org/wiki/Alan_Turing and extract a structured JSON record with EXACTLY these four fields: birth_date, death_date, doctoral_advisor, paper_1936_title.",
+          "sources": [
+            {
+              "url": "https://www.transcend.org/tms/2022/06/alan-turing-23-jun-1912-7-jun-1954-3",
+              "title": "Alan Turing (23 Jun 1912 \u2013 7 Jun 1954)"
+            },
+            {
+              "url": "http://aigraph.cslt.org/courses/05/Alan_Turing.pdf",
+              "title": "Alan Turing"
+            }
+          ],
+          "findings": "Alan Turing was born on June 23, 1912, and died on June 7, 1954. His landmark paper published in 1936 is titled \"On Computable Numbers, with an Application to the Entscheidungsproblem\".\n\nWhile the provided sources confirm his birth and death dates and the title of his 1936 paper, they do not explicitly name his doctoral advisor (who was Alonzo Church at Princeton University, a fact well-documented in standard biographies though not explicitly detailed in the provided search snippets). The information is sufficient for the requested extraction."
+        },
+        "artifacts": [],
+        "successors": [],
+        "cost": 0.0,
+        "elapsed_s": 20.8023464679718,
+        "provider": "gemini",
+        "error": null
+      },
+      "_result_typed": true,
+      "id": "n:2"
+    },
+    {
+      "skill": "distiller",
+      "inputs": [
+        "n:2"
+      ],
+      "metadata": {
+        "label": "extract_fields"
+      },
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "distiller",
+        "output": {
+          "fields": {
+            "birth_date": "June 23, 1912",
+            "death_date": "June 7, 1954",
+            "paper_1936_title": "On Computable Numbers, with an Application to the Entscheidungsproblem"
+          },
+          "rationale": "The birth date, death date, and 1936 paper title are provided in the researcher findings, while the doctoral advisor is omitted as it was not explicitly contained in the provided source text."
+        },
+        "artifacts": [],
+        "successors": [],
+        "cost": 0.0,
+        "elapsed_s": 3.3741111755371094,
+        "provider": "gemini",
+        "error": null
+      },
+      "_result_typed": true,
+      "id": "n:3"
+    },
+    {
+      "skill": "critic",
+      "inputs": [
+        "n:3"
+      ],
+      "metadata": {
+        "label": "validate_json",
+        "question": "Does the output contain exactly these four fields: birth_date, death_date, doctoral_advisor, paper_1936_title?"
+      },
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "critic",
+        "output": {
+          "verdict": "fail",
+          "rationale": "The output is missing the required 'doctoral_advisor' field, which must be present in the structured record."
+        },
+        "artifacts": [],
+        "successors": [],
+        "cost": 0.0,
+        "elapsed_s": 2.707382917404175,
+        "provider": "groq",
+        "error": null
+      },
+      "_result_typed": true,
+      "id": "n:4"
+    },
+    {
+      "skill": "formatter",
+      "inputs": [
+        "n:4"
+      ],
+      "metadata": {
+        "label": "final_output"
+      },
+      "status": "skipped",
+      "id": "n:5"
+    },
+    {
+      "skill": "planner",
+      "inputs": [
+        "USER_QUERY"
+      ],
+      "metadata": {
+        "failure_report": "critic failed target=n:3 child=n:5 rationale=The output is missing the required 'doctoral_advisor' field, which must be present in the structured record.",
+        "recovers": "n:3",
+        "recovery_reason": "critic_fail"
+      },
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "planner",
+        "output": {
+          "rationale": "Fetch the Alan Turing Wikipedia page, extract the four required fields, and validate the presence of all fields before formatting.",
+          "nodes": [
+            {
+              "skill": "researcher",
+              "inputs": [
+                "https://en.wikipedia.org/wiki/Alan_Turing"
+              ],
+              "metadata": {
+                "label": "r1",
+                "question": "Fetch the content of the Alan Turing Wikipedia page."
+              }
+            },
+            {
+              "skill": "distiller",
+              "inputs": [
+                "n:r1"
+              ],
+              "metadata": {
+                "label": "d1",
+                "question": "Extract birth_date, death_date, doctoral_advisor, and paper_1936_title."
+              }
+            },
+            {
+              "skill": "critic",
+              "inputs": [
+                "n:d1"
+              ],
+              "metadata": {
+                "label": "c1",
+                "question": "Ensure the JSON contains exactly these four fields: birth_date, death_date, doctoral_advisor, paper_1936_title."
+              }
+            },
+            {
+              "skill": "formatter",
+              "inputs": [
+                "n:c1"
+              ],
+              "metadata": {
+                "label": "out"
+              }
+            }
+          ]
+        },
+        "artifacts": [],
+        "successors": [
+          {
+            "skill": "researcher",
+            "inputs": [
+              "https://en.wikipedia.org/wiki/Alan_Turing"
+            ],
+            "metadata": {
+              "label": "r1",
+              "question": "Fetch the content of the Alan Turing Wikipedia page."
+            }
+          },
+          {
+            "skill": "distiller",
+            "inputs": [
+              "n:r1"
+            ],
+            "metadata": {
+              "label": "d1",
+              "question": "Extract birth_date, death_date, doctoral_advisor, and paper_1936_title."
+            }
+          },
+          {
+            "skill": "critic",
+            "inputs": [
+              "n:d1"
+            ],
+            "metadata": {
+              "label": "c1",
+              "question": "Ensure the JSON contains exactly these four fields: birth_date, death_date, doctoral_advisor, paper_1936_title."
+            }
+          },
+          {
+            "skill": "formatter",
+            "inputs": [
+              "n:c1"
+            ],
+            "metadata": {
+              "label": "out"
+            }
+          }
+        ],
+        "cost": 0.0,
+        "elapsed_s": 8.453294277191162,
+        "provider": "gemini",
+        "error": null
+      },
+      "_result_typed": true,
+      "id": "n:6"
+    },
+    {
+      "skill": "researcher",
+      "inputs": [
+        "n:6"
+      ],
+      "metadata": {
+        "label": "r1",
+        "question": "Fetch the content of the Alan Turing Wikipedia page."
+      },
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "researcher",
+        "output": {
+          "question": "Fetch https://en.wikipedia.org/wiki/Alan_Turing and extract a structured JSON record with EXACTLY these four fields: birth_date, death_date, doctoral_advisor, paper_1936_title.",
+          "sources": [
+            {
+              "url": "https://en.wikipedia.org/wiki/Alan_Turing",
+              "title": "Alan Turing - Wikipedia"
+            },
+            {
+              "url": "https://gradschool.princeton.edu/about/viget-honor-roll/alan-mathison-turing",
+              "title": "About Alan M. Turing | CHARLES BABBAGE INSTITUTE"
+            },
+            {
+              "url": "https://www.transcend.org/tms/2022/06/alan-turing-23-jun-1912-7-jun-1954-3",
+              "title": "Alan Turing (23 Jun 1912 \u2013 7 Jun 1954)"
+            }
+          ],
+          "findings": "Alan Turing was born on June 23, 1912, and died on June 7, 1954. He pursued his doctoral studies at Princeton University, where his advisor was Alonzo Church.\n\nIn 1936, Turing published his seminal paper titled \"On Computable Numbers, with an Application to the Entscheidungsproblem,\" which introduced the concept of the universal machine, now known as the Turing machine."
+        },
+        "artifacts": [],
+        "successors": [],
+        "cost": 0.0,
+        "elapsed_s": 36.29306674003601,
+        "provider": "gemini",
+        "error": null
+      },
+      "_result_typed": true,
+      "id": "n:7"
+    },
+    {
+      "skill": "distiller",
+      "inputs": [
+        "n:7"
+      ],
+      "metadata": {
+        "label": "d1",
+        "question": "Extract birth_date, death_date, doctoral_advisor, and paper_1936_title."
+      },
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "distiller",
+        "output": {
+          "fields": {
+            "birth_date": "June 23, 1912",
+            "death_date": "June 7, 1954",
+            "doctoral_advisor": "Alonzo Church",
+            "paper_1936_title": "On Computable Numbers, with an Application to the Entscheidungsproblem"
+          },
+          "rationale": "All requested fields were extracted directly from the findings provided by the researcher node."
+        },
+        "artifacts": [],
+        "successors": [],
+        "cost": 0.0,
+        "elapsed_s": 3.3746583461761475,
+        "provider": "gemini",
+        "error": null
+      },
+      "_result_typed": true,
+      "id": "n:8"
+    },
+    {
+      "skill": "critic",
+      "inputs": [
+        "n:8"
+      ],
+      "metadata": {
+        "label": "c1",
+        "question": "Ensure the JSON contains exactly these four fields: birth_date, death_date, doctoral_advisor, paper_1936_title."
+      },
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "critic",
+        "output": {
+          "verdict": "pass",
+          "rationale": "All four required fields are present and correctly reflect Alan Turing's Wikipedia information."
+        },
+        "artifacts": [],
+        "successors": [],
+        "cost": 0.0,
+        "elapsed_s": 3.478480339050293,
+        "provider": "groq",
+        "error": null
+      },
+      "_result_typed": true,
+      "id": "n:9"
+    },
+    {
+      "skill": "formatter",
+      "inputs": [
+        "n:9"
+      ],
+      "metadata": {
+        "label": "out"
+      },
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "formatter",
+        "output": {
+          "final_answer": "The requested information for Alan Turing is as follows: {\"birth_date\": \"23 June 1912\", \"death_date\": \"7 June 1954\", \"doctoral_advisor\": \"Alonzo Church\", \"paper_1936_title\": \"On Computable Numbers, with an Application to the Entscheidungsproblem\"}"
+        },
+        "artifacts": [],
+        "successors": [],
+        "cost": 0.0,
+        "elapsed_s": 2.841543436050415,
+        "provider": "gemini",
+        "error": null
+      },
+      "_result_typed": true,
+      "id": "n:10"
+    }
+  ],
+  "edges": [
+    {
+      "source": "n:1",
+      "target": "n:2"
+    },
+    {
+      "source": "n:2",
+      "target": "n:3"
+    },
+    {
+      "source": "n:3",
+      "target": "n:4"
+    },
+    {
+      "source": "n:4",
+      "target": "n:5"
+    },
+    {
+      "source": "n:6",
+      "target": "n:7"
+    },
+    {
+      "source": "n:7",
+      "target": "n:8"
+    },
+    {
+      "source": "n:8",
+      "target": "n:9"
+    },
+    {
+      "source": "n:9",
+      "target": "n:10"
+    }
+  ]
+}

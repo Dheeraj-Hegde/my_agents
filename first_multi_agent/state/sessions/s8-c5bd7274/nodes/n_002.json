@@ -1,0 +1,28 @@
+{
+  "node_id": "n:2",
+  "skill": "translator",
+  "status": "complete",
+  "inputs": [
+    "USER_QUERY"
+  ],
+  "result": {
+    "success": true,
+    "agent_name": "translator",
+    "output": {
+      "translated_text": "",
+      "source_language": "English",
+      "target_language": "French, Spanish, German",
+      "notes": "Multiple target languages requested; ambiguous for a single translation output."
+    },
+    "artifacts": [],
+    "successors": [],
+    "cost": 0.0,
+    "elapsed_s": 5.81046462059021,
+    "provider": "groq",
+    "error": null
+  },
+  "prompt_sent": "You are the Translator skill. You take a piece of text and render it\nfaithfully into one target language.\n\nYou make no tool calls. The input arrives in the prompt under INPUTS.\nThe target language is supplied by the orchestrator in `metadata.target_language`\n(e.g. \"French\", \"Spanish\", \"de\", \"ja\"). If that field is absent, look\nfor a target language named in the upstream node's question or in the\nUSER_QUERY; if still ambiguous, do not guess.\n\nProcedure:\n  1. Identify the source text. It is either the USER_QUERY (when the\n     user asked directly) or the `output` of an upstream node.\n  2. Detect the source language.\n  3. Translate into the target language. Be faithful, not creative:\n       - preserve proper nouns, numbers, code, URLs, and punctuation\n       - keep the original register (formal stays formal)\n       - do not summarise, expand, or add commentary\n       - do not transliterate names unless the target script requires it\n  4. If the target language is missing or ambiguous, emit an empty\n     `translated_text` and explain in `notes`. Do not invent a target.\n\nOutput schema (JSON, no prose, no markdown fences):\n\n  {\n    \"translated_text\": \"<text in target language, or empty string on failure>\",\n    \"source_language\": \"<ISO 639-1 code or English name>\",\n    \"target_language\": \"<as requested, echoed back>\",\n    \"notes\": \"<one-line caveat, or empty string>\"\n  }\n\nNotes:\n  - `translated_text` is the load-bearing output; downstream Formatter\n    nodes read it directly.\n  - A Critic node may run after you. It will fail the translation if\n    `translated_text` is empty when a target was clearly specified, or\n    if you dropped load-bearing content (numbers, names) from the source.\n\nUSER_QUERY: Translate 'Knowledge is power, but enthusiasm pulls the switch.' into French, Spanish, and German.\n\nMEMORY HITS (8 from FAISS):\n  - [fact] User greeting 'hello'\n      source: user_query\n      raw: hello\n  - [fact] User greeting 'hello'\n      source: user_query\n      raw: hello\n  - [fact] Boiling point of water, speed of light, and height of Mount Everest\n      source: user_query\n      raw: Independently look up three unrelated facts and report all three: (1) the boiling point of water at sea level in degrees Celsius, (2) the speed of light in vacuum in metres per second, and (3) the hei\n  - [fact] Boiling point of water at sea level, speed of light, and height of Mount Everest\n      source: user_query\n      raw: Independently look up three unrelated facts and report all three: (1) the boiling point of water at sea level in degrees Celsius, (2) the speed of light in vacuum in metres per second, and (3) the hei\n  - [tool_outcome] Information about Claude Shannon's birth date, death date, and three contributions to information theory from Wikipedia\n      source: user_query\n      raw: Fetch https://en.wikipedia.org/wiki/Claude_Shannon and tell me his birth date, death date, and three key contributions to information theory.\n  - [tool_outcome] Fetch Alan Turing Wikipedia page to extract structured biographical data\n      source: user_query\n      raw: Fetch https://en.wikipedia.org/wiki/Alan_Turing and extract a structured JSON record with EXACTLY these four fields: birth_date, death_date, birth_place, nationality. Pipeline: researcher then distill\n  - [tool_outcome] Extract biographical data for Alan Turing from Wikipedia\n      source: user_query\n      raw: Fetch https://en.wikipedia.org/wiki/Alan_Turing and extract a structured JSON record with EXACTLY these four fields: birth_date, death_date, birth_place, nationality. Pipeline: researcher then distill\n  - [tool_outcome] Fetch Claude Shannon biography details from Wikipedia including birth date, death date, and information theory contributions\n      source: user_query\n      raw: Fetch https://en.wikipedia.org/wiki/Claude_Shannon and tell me his birth date, death date, and three key contributions to information theory.\n\nINPUTS:\n[\n  {\n    \"id\": \"USER_QUERY\",\n    \"kind\": \"query\",\n    \"value\": \"Translate 'Knowledge is power, but enthusiasm pulls the switch.' into French, Spanish, and German.\"\n  }\n]",
+  "started_at": 1780428354.2188148,
+  "completed_at": 1780428360.0292795,
+  "retries": 0
+}

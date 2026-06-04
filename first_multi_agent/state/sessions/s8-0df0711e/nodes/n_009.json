@@ -1,0 +1,23 @@
+{
+  "node_id": "n:9",
+  "skill": "planner",
+  "status": "failed",
+  "inputs": [
+    "USER_QUERY"
+  ],
+  "result": {
+    "success": false,
+    "agent_name": "planner",
+    "output": {},
+    "artifacts": [],
+    "successors": [],
+    "cost": 0.0,
+    "elapsed_s": 0.0,
+    "provider": "",
+    "error": "exception: HTTPStatusError: Server error '503 Service Unavailable' for url 'http://localhost:8108/v1/chat'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503"
+  },
+  "prompt_sent": "(exception before prompt-render)",
+  "started_at": 1780217250.1604683,
+  "completed_at": 1780217250.1604683,
+  "retries": 0
+}

@@ -1,0 +1,34 @@
+{
+  "node_id": "n:3",
+  "skill": "distiller",
+  "status": "complete",
+  "inputs": [
+    "n:2"
+  ],
+  "result": {
+    "success": true,
+    "agent_name": "distiller",
+    "output": {
+      "fields": {
+        "birth_date": "April 30, 1916",
+        "death_date": "February 24, 2001",
+        "contributions": [
+          "Mathematical model for communication",
+          "Application of Boolean algebra to relay and switching circuits",
+          "Formalization of the 'bit' as the fundamental unit of information"
+        ]
+      },
+      "rationale": "The findings from the Britannica biography provide the birth date, death date, and three specific contributions to information theory."
+    },
+    "artifacts": [],
+    "successors": [],
+    "cost": 0.0,
+    "elapsed_s": 2.921116590499878,
+    "provider": "gemini",
+    "error": null
+  },
+  "prompt_sent": "You are the Distiller skill. You receive raw text (typically the\n`findings` of one or more Researcher nodes, or the `chunks` of a\nRetriever node) and produce a small structured record.\n\nYou make no tool calls. You do no web access. Everything you need is\nalready in the prompt under INPUTS.\n\nProcedure:\n  1. Identify what fields the user's question implies (people, dates,\n     numbers, comparisons, percentages, attributions).\n  2. Pull those fields out of the inputs.\n  3. Emit a compact JSON record. Fields with no evidence in the inputs\n     are omitted, not made up.\n\nOutput schema (JSON, no prose, no markdown fences):\n\n  {\n    \"fields\": { \"<field_name>\": \"<value>\", ... },\n    \"rationale\": \"<one short sentence saying which input supports each field>\"\n  }\n\nNotes:\n  - The fields dictionary is the load-bearing output; downstream\n    Formatter nodes read it.\n  - When the question is a comparison (`fastest growing`, `largest`),\n    emit a `comparison` key with `winner: <id>` and `reason: <short>`.\n  - When the question's evidence is missing, set `fields: {}` and put\n    the gap in `rationale`. Do not invent.\n\nA Critic node may run after you. Its evaluation will fail if you\ninvented fields or made claims unsupported by the inputs.\n\nUSER_QUERY: Fetch https://en.wikipedia.org/wiki/Claude_Shannon and tell me his birth date, death date, and three key contributions to information theory.\n\nMEMORY HITS (4 from FAISS):\n  - [fact] User greeting 'hello'\n      source: user_query\n      raw: hello\n  - [fact] User greeting 'hello'\n      source: user_query\n      raw: hello\n  - [fact] For Lagos, Cairo, and Kinshasa, find current populations and growth rates and tell me which is growing fastest.\n      source: user_query\n      raw: For Lagos, Cairo, and Kinshasa, find current populations and growth rates and tell me which is growing fastest.\n  - [fact] Read /nonexistent/path.txt and tell me what's in it.\n      source: user_query\n      raw: Read /nonexistent/path.txt and tell me what's in it.\n\nINPUTS:\n[\n  {\n    \"id\": \"n:2\",\n    \"kind\": \"upstream\",\n    \"skill\": \"researcher\",\n    \"output\": {\n      \"question\": \"Fetch https://en.wikipedia.org/wiki/Claude_Shannon and tell me his birth date, death date, and three key contributions to information theory.\",\n      \"sources\": [\n        {\n          \"url\": \"https://www.britannica.com/biography/Claude-Shannon\",\n          \"title\": \"Claude Shannon | Father of Information Theory, American Engineer\"\n        }\n      ],\n      \"findings\": \"Claude Shannon was born on April 30, 1916, and passed away on February 24, 2001.\\n\\nHis key contributions to information theory include the establishment of a mathematical model for communication, as detailed in his seminal work 'A Mathematical Theory of Communication.' He is also credited with the foundational application of Boolean algebra to relay and switching circuits, which laid the groundwork for modern digital computer design. Additionally, he formalized the concept of the 'bit' as the fundamental unit of information, enabling the quantification and efficient transmission of data.\"\n    }\n  }\n]",
+  "started_at": 1780218774.2331812,
+  "completed_at": 1780218777.1542978,
+  "retries": 0
+}

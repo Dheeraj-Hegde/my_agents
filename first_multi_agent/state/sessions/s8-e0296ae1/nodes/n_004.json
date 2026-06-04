@@ -1,0 +1,25 @@
+{
+  "node_id": "n:4",
+  "skill": "formatter",
+  "status": "complete",
+  "inputs": [
+    "n:3"
+  ],
+  "result": {
+    "success": true,
+    "agent_name": "formatter",
+    "output": {
+      "final_answer": "Claude Shannon was born on April 30, 1916, and passed away on February 24, 2001.\n\nThree key contributions to information theory include:\n1. \"A Symbolic Analysis of Relay and Switching Circuits\" (his master's thesis)\n2. \"A Mathematical Theory of Communication\" (his seminal 1948 paper)\n3. Introducing and popularizing the term \"bit\""
+    },
+    "artifacts": [],
+    "successors": [],
+    "cost": 0.0,
+    "elapsed_s": 3.5990376472473145,
+    "provider": "gemini",
+    "error": null
+  },
+  "prompt_sent": "You are the Formatter skill. You are the conventional TERMINAL node of\nevery DAG. Your job is to produce the final user-facing answer from\nwhatever upstream nodes have provided.\n\nYou make no tool calls. The user's original query appears under\nUSER_QUERY. Upstream results appear under INPUTS.\n\nProcedure:\n  1. Read USER_QUERY.\n  2. Read INPUTS and decide which fields / findings answer the query.\n  3. Write the user-facing answer in plain English. Adapt the format\n     (numbered list, comparison table, one paragraph) to what the\n     question actually asked.\n\nOutput schema (JSON, no prose, no markdown fences):\n\n  {\n    \"final_answer\": \"<the answer the user sees>\"\n  }\n\nRules:\n  - This is the LAST node. Do not add successors.\n  - The answer must be answerable from INPUTS alone. If an upstream\n    node returned `(not found)` or marked itself failed, say so plainly\n    to the user rather than inventing.\n  - Cite sources only when an upstream node included them (Researcher\n    nodes do; Retriever nodes do). Do not invent URLs.\n\nUSER_QUERY: Fetch https://en.wikipedia.org/wiki/Claude_Shannon and tell me his birth date, death date, and three key contributions to information theory.\n\nMEMORY HITS (2 from FAISS):\n  - [fact] User greeting 'hello'\n      source: user_query\n      raw: hello\n  - [fact] User greeting 'hello'\n      source: user_query\n      raw: hello\n\nINPUTS:\n[\n  {\n    \"id\": \"n:3\",\n    \"kind\": \"upstream\",\n    \"skill\": \"distiller\",\n    \"output\": {\n      \"fields\": {\n        \"birth_date\": \"April 30, 1916\",\n        \"death_date\": \"February 24, 2001\",\n        \"contributions\": [\n          \"\\\"A Symbolic Analysis of Relay and Switching Circuits\\\" (master's thesis)\",\n          \"\\\"A Mathematical Theory of Communication\\\" (1948 paper)\",\n          \"Introduced and popularized the term \\\"bit\\\"\"\n        ]\n      },\n      \"rationale\": \"The birth date, death date, and three key contributions are all directly stated in the researcher's findings.\"\n    }\n  }\n]",
+  "started_at": 1780217166.6878457,
+  "completed_at": 1780217170.2868834,
+  "retries": 0
+}

@@ -25,6 +25,9 @@ first_rag/.env
 first_rag/screenshot/narration/
 first_rag/screenshot/demo/
 first_rag/screenshot/screens/
+first_multi_agent/run_logs/narration/
+first_multi_agent/run_logs/video/
+first_multi_agent/.env
 
 # Video production temporary files
 narration.pcm

@@ -1,0 +1,358 @@
+{
+  "directed": true,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "skill": "planner",
+      "inputs": [
+        "USER_QUERY"
+      ],
+      "metadata": {},
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "planner",
+        "output": {
+          "rationale": "Fetch the population for each city individually, then use a coder to compare them and identify the two closest in size, and finally format the answer.",
+          "nodes": [
+            {
+              "skill": "researcher",
+              "inputs": [
+                "population of London"
+              ],
+              "metadata": {
+                "label": "london_pop",
+                "question": "What is the current population of London?"
+              }
+            },
+            {
+              "skill": "researcher",
+              "inputs": [
+                "population of Paris"
+              ],
+              "metadata": {
+                "label": "paris_pop",
+                "question": "What is the current population of Paris?"
+              }
+            },
+            {
+              "skill": "researcher",
+              "inputs": [
+                "population of Berlin"
+              ],
+              "metadata": {
+                "label": "berlin_pop",
+                "question": "What is the current population of Berlin?"
+              }
+            },
+            {
+              "skill": "coder",
+              "inputs": [
+                "n:london_pop",
+                "n:paris_pop",
+                "n:berlin_pop"
+              ],
+              "metadata": {
+                "label": "compare_pops",
+                "question": "Extract populations and determine which two cities are closest in size."
+              }
+            },
+            {
+              "skill": "formatter",
+              "inputs": [
+                "n:london_pop",
+                "n:paris_pop",
+                "n:berlin_pop",
+                "n:compare_pops"
+              ],
+              "metadata": {
+                "label": "out"
+              }
+            }
+          ]
+        },
+        "artifacts": [],
+        "successors": [
+          {
+            "skill": "researcher",
+            "inputs": [
+              "population of London"
+            ],
+            "metadata": {
+              "label": "london_pop",
+              "question": "What is the current population of London?"
+            }
+          },
+          {
+            "skill": "researcher",
+            "inputs": [
+              "population of Paris"
+            ],
+            "metadata": {
+              "label": "paris_pop",
+              "question": "What is the current population of Paris?"
+            }
+          },
+          {
+            "skill": "researcher",
+            "inputs": [
+              "population of Berlin"
+            ],
+            "metadata": {
+              "label": "berlin_pop",
+              "question": "What is the current population of Berlin?"
+            }
+          },
+          {
+            "skill": "coder",
+            "inputs": [
+              "n:london_pop",
+              "n:paris_pop",
+              "n:berlin_pop"
+            ],
+            "metadata": {
+              "label": "compare_pops",
+              "question": "Extract populations and determine which two cities are closest in size."
+            }
+          },
+          {
+            "skill": "formatter",
+            "inputs": [
+              "n:london_pop",
+              "n:paris_pop",
+              "n:berlin_pop",
+              "n:compare_pops"
+            ],
+            "metadata": {
+              "label": "out"
+            }
+          }
+        ],
+        "cost": 0.0,
+        "elapsed_s": 4.596465587615967,
+        "provider": "gemini",
+        "error": null
+      },
+      "_result_typed": true,
+      "id": "n:1"
+    },
+    {
+      "skill": "researcher",
+      "inputs": [
+        "n:1"
+      ],
+      "metadata": {
+        "label": "london_pop",
+        "question": "What is the current population of London?"
+      },
+      "status": "failed",
+      "result": {
+        "success": false,
+        "agent_name": "researcher",
+        "output": {},
+        "artifacts": [],
+        "successors": [],
+        "cost": 0.0,
+        "elapsed_s": 0.0,
+        "provider": "",
+        "error": "exception: ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)"
+      },
+      "_result_typed": true,
+      "id": "n:2"
+    },
+    {
+      "skill": "researcher",
+      "inputs": [
+        "n:1"
+      ],
+      "metadata": {
+        "label": "paris_pop",
+        "question": "What is the current population of Paris?"
+      },
+      "status": "failed",
+      "result": {
+        "success": false,
+        "agent_name": "researcher",
+        "output": {},
+        "artifacts": [],
+        "successors": [],
+        "cost": 0.0,
+        "elapsed_s": 0.0,
+        "provider": "",
+        "error": "exception: ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)"
+      },
+      "_result_typed": true,
+      "id": "n:3"
+    },
+    {
+      "skill": "researcher",
+      "inputs": [
+        "n:1"
+      ],
+      "metadata": {
+        "label": "berlin_pop",
+        "question": "What is the current population of Berlin?"
+      },
+      "status": "failed",
+      "result": {
+        "success": false,
+        "agent_name": "researcher",
+        "output": {},
+        "artifacts": [],
+        "successors": [],
+        "cost": 0.0,
+        "elapsed_s": 0.0,
+        "provider": "",
+        "error": "exception: ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)"
+      },
+      "_result_typed": true,
+      "id": "n:4"
+    },
+    {
+      "skill": "coder",
+      "inputs": [
+        "n:2",
+        "n:3",
+        "n:4"
+      ],
+      "metadata": {
+        "label": "compare_pops",
+        "question": "Extract populations and determine which two cities are closest in size."
+      },
+      "status": "pending",
+      "id": "n:5"
+    },
+    {
+      "skill": "formatter",
+      "inputs": [
+        "n:2",
+        "n:3",
+        "n:4",
+        "n:5"
+      ],
+      "metadata": {
+        "label": "out"
+      },
+      "status": "pending",
+      "id": "n:6"
+    },
+    {
+      "skill": "planner",
+      "inputs": [
+        "USER_QUERY"
+      ],
+      "metadata": {
+        "failure_report": "node=n:2 skill=researcher reason=upstream_failure error=exception: ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)",
+        "recovers": "n:2",
+        "recovery_reason": "upstream_failure"
+      },
+      "status": "failed",
+      "result": {
+        "success": false,
+        "agent_name": "planner",
+        "output": {},
+        "artifacts": [],
+        "successors": [],
+        "cost": 0.0,
+        "elapsed_s": 0.0,
+        "provider": "",
+        "error": "exception: HTTPStatusError: Server error '503 Service Unavailable' for url 'http://localhost:8108/v1/chat'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503"
+      },
+      "_result_typed": true,
+      "id": "n:7"
+    },
+    {
+      "skill": "planner",
+      "inputs": [
+        "USER_QUERY"
+      ],
+      "metadata": {
+        "failure_report": "node=n:3 skill=researcher reason=upstream_failure error=exception: ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)",
+        "recovers": "n:3",
+        "recovery_reason": "upstream_failure"
+      },
+      "status": "failed",
+      "result": {
+        "success": false,
+        "agent_name": "planner",
+        "output": {},
+        "artifacts": [],
+        "successors": [],
+        "cost": 0.0,
+        "elapsed_s": 0.0,
+        "provider": "",
+        "error": "exception: HTTPStatusError: Server error '503 Service Unavailable' for url 'http://localhost:8108/v1/chat'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503"
+      },
+      "_result_typed": true,
+      "id": "n:8"
+    },
+    {
+      "skill": "planner",
+      "inputs": [
+        "USER_QUERY"
+      ],
+      "metadata": {
+        "failure_report": "node=n:4 skill=researcher reason=upstream_failure error=exception: ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)",
+        "recovers": "n:4",
+        "recovery_reason": "upstream_failure"
+      },
+      "status": "failed",
+      "result": {
+        "success": false,
+        "agent_name": "planner",
+        "output": {},
+        "artifacts": [],
+        "successors": [],
+        "cost": 0.0,
+        "elapsed_s": 0.0,
+        "provider": "",
+        "error": "exception: HTTPStatusError: Server error '503 Service Unavailable' for url 'http://localhost:8108/v1/chat'\nFor more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/503"
+      },
+      "_result_typed": true,
+      "id": "n:9"
+    }
+  ],
+  "edges": [
+    {
+      "source": "n:1",
+      "target": "n:2"
+    },
+    {
+      "source": "n:1",
+      "target": "n:3"
+    },
+    {
+      "source": "n:1",
+      "target": "n:4"
+    },
+    {
+      "source": "n:2",
+      "target": "n:5"
+    },
+    {
+      "source": "n:2",
+      "target": "n:6"
+    },
+    {
+      "source": "n:3",
+      "target": "n:5"
+    },
+    {
+      "source": "n:3",
+      "target": "n:6"
+    },
+    {
+      "source": "n:4",
+      "target": "n:5"
+    },
+    {
+      "source": "n:4",
+      "target": "n:6"
+    },
+    {
+      "source": "n:5",
+      "target": "n:6"
+    }
+  ]
+}

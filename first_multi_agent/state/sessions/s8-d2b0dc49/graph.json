@@ -1,0 +1,471 @@
+{
+  "directed": true,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "skill": "planner",
+      "inputs": [
+        "USER_QUERY"
+      ],
+      "metadata": {},
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "planner",
+        "output": {
+          "rationale": "Fetch the content from the provided URL, distill it into the requested JSON fields, and validate the output format.",
+          "nodes": [
+            {
+              "skill": "researcher",
+              "inputs": [
+                "https://en.wikipedia.org/wiki/Alan_Turing"
+              ],
+              "metadata": {
+                "label": "r1",
+                "question": "Fetch the Wikipedia page content for Alan Turing."
+              }
+            },
+            {
+              "skill": "distiller",
+              "inputs": [
+                "n:r1"
+              ],
+              "metadata": {
+                "label": "d1",
+                "question": "Extract birth_date, death_date, birth_place, and nationality."
+              }
+            },
+            {
+              "skill": "critic",
+              "inputs": [
+                "n:d1"
+              ],
+              "metadata": {
+                "label": "c1",
+                "question": "Ensure output is valid JSON containing exactly these four fields: birth_date, death_date, birth_place, nationality."
+              }
+            },
+            {
+              "skill": "formatter",
+              "inputs": [
+                "n:c1"
+              ],
+              "metadata": {
+                "label": "out"
+              }
+            }
+          ]
+        },
+        "artifacts": [],
+        "successors": [
+          {
+            "skill": "researcher",
+            "inputs": [
+              "https://en.wikipedia.org/wiki/Alan_Turing"
+            ],
+            "metadata": {
+              "label": "r1",
+              "question": "Fetch the Wikipedia page content for Alan Turing."
+            }
+          },
+          {
+            "skill": "distiller",
+            "inputs": [
+              "n:r1"
+            ],
+            "metadata": {
+              "label": "d1",
+              "question": "Extract birth_date, death_date, birth_place, and nationality."
+            }
+          },
+          {
+            "skill": "critic",
+            "inputs": [
+              "n:d1"
+            ],
+            "metadata": {
+              "label": "c1",
+              "question": "Ensure output is valid JSON containing exactly these four fields: birth_date, death_date, birth_place, nationality."
+            }
+          },
+          {
+            "skill": "formatter",
+            "inputs": [
+              "n:c1"
+            ],
+            "metadata": {
+              "label": "out"
+            }
+          }
+        ],
+        "cost": 0.0,
+        "elapsed_s": 9.82229471206665,
+        "provider": "gemini",
+        "error": null
+      },
+      "_result_typed": true,
+      "id": "n:1"
+    },
+    {
+      "skill": "researcher",
+      "inputs": [
+        "n:1"
+      ],
+      "metadata": {
+        "label": "r1",
+        "question": "Fetch the Wikipedia page content for Alan Turing."
+      },
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "researcher",
+        "output": {
+          "question": "Fetch https://en.wikipedia.org/wiki/Alan_Turing and extract a structured JSON record with EXACTLY these four fields: birth_date, death_date, birth_place, nationality.",
+          "sources": [
+            {
+              "url": "https://en.wikipedia.org/wiki/Alan_Turing",
+              "title": "Alan Turing - Wikipedia"
+            }
+          ],
+          "findings": "Alan Turing was born on 23 June 1912 in Maida Vale, London, England. He was a British mathematician and computer scientist.\n\nTuring died on 7 June 1954 at his home in Wilmslow, Cheshire, England."
+        },
+        "artifacts": [],
+        "successors": [],
+        "cost": 0.0,
+        "elapsed_s": 50.43329668045044,
+        "provider": "gemini",
+        "error": null
+      },
+      "_result_typed": true,
+      "id": "n:2"
+    },
+    {
+      "skill": "distiller",
+      "inputs": [
+        "n:2"
+      ],
+      "metadata": {
+        "label": "d1",
+        "question": "Extract birth_date, death_date, birth_place, and nationality."
+      },
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "distiller",
+        "output": {
+          "fields": {
+            "birth_date": "23 June 1912",
+            "death_date": "7 June 1954"
+          },
+          "rationale": "Extracted fields supported by the researcher's findings."
+        },
+        "artifacts": [],
+        "successors": [],
+        "cost": 0.0,
+        "elapsed_s": 3.1349470615386963,
+        "provider": "gemini",
+        "error": null
+      },
+      "_result_typed": true,
+      "id": "n:3"
+    },
+    {
+      "skill": "critic",
+      "inputs": [
+        "n:3"
+      ],
+      "metadata": {
+        "label": "c1",
+        "question": "Ensure output is valid JSON containing exactly these four fields: birth_date, death_date, birth_place, nationality."
+      },
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "critic",
+        "output": {
+          "verdict": "fail",
+          "rationale": "The distiller output only provides birth_date and death_date, omitting the required birth_place and nationality fields."
+        },
+        "artifacts": [],
+        "successors": [],
+        "cost": 0.0,
+        "elapsed_s": 3.1926281452178955,
+        "provider": "groq",
+        "error": null
+      },
+      "_result_typed": true,
+      "id": "n:4"
+    },
+    {
+      "skill": "formatter",
+      "inputs": [
+        "n:4"
+      ],
+      "metadata": {
+        "label": "out"
+      },
+      "status": "skipped",
+      "id": "n:5"
+    },
+    {
+      "skill": "planner",
+      "inputs": [
+        "USER_QUERY"
+      ],
+      "metadata": {
+        "failure_report": "critic failed target=n:3 child=n:5 rationale=The distiller output only provides birth_date and death_date, omitting the required birth_place and nationality fields.",
+        "recovers": "n:3",
+        "recovery_reason": "critic_fail"
+      },
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "planner",
+        "output": {
+          "rationale": "Fetch the Wikipedia page for Alan Turing, extract the required four fields using the distiller, and use a critic to ensure all fields are present before formatting.",
+          "nodes": [
+            {
+              "skill": "researcher",
+              "inputs": [
+                "https://en.wikipedia.org/wiki/Alan_Turing"
+              ],
+              "metadata": {
+                "label": "r1",
+                "question": "Fetch the content of the Alan Turing Wikipedia page."
+              }
+            },
+            {
+              "skill": "distiller",
+              "inputs": [
+                "n:r1"
+              ],
+              "metadata": {
+                "label": "d1",
+                "question": "Extract birth_date, death_date, birth_place, and nationality."
+              }
+            },
+            {
+              "skill": "critic",
+              "inputs": [
+                "n:d1"
+              ],
+              "metadata": {
+                "label": "c1",
+                "question": "Does the output contain exactly these four fields: birth_date, death_date, birth_place, nationality?"
+              }
+            },
+            {
+              "skill": "formatter",
+              "inputs": [
+                "n:c1"
+              ],
+              "metadata": {
+                "label": "out"
+              }
+            }
+          ]
+        },
+        "artifacts": [],
+        "successors": [
+          {
+            "skill": "researcher",
+            "inputs": [
+              "https://en.wikipedia.org/wiki/Alan_Turing"
+            ],
+            "metadata": {
+              "label": "r1",
+              "question": "Fetch the content of the Alan Turing Wikipedia page."
+            }
+          },
+          {
+            "skill": "distiller",
+            "inputs": [
+              "n:r1"
+            ],
+            "metadata": {
+              "label": "d1",
+              "question": "Extract birth_date, death_date, birth_place, and nationality."
+            }
+          },
+          {
+            "skill": "critic",
+            "inputs": [
+              "n:d1"
+            ],
+            "metadata": {
+              "label": "c1",
+              "question": "Does the output contain exactly these four fields: birth_date, death_date, birth_place, nationality?"
+            }
+          },
+          {
+            "skill": "formatter",
+            "inputs": [
+              "n:c1"
+            ],
+            "metadata": {
+              "label": "out"
+            }
+          }
+        ],
+        "cost": 0.0,
+        "elapsed_s": 7.5913920402526855,
+        "provider": "gemini",
+        "error": null
+      },
+      "_result_typed": true,
+      "id": "n:6"
+    },
+    {
+      "skill": "researcher",
+      "inputs": [
+        "n:6"
+      ],
+      "metadata": {
+        "label": "r1",
+        "question": "Fetch the content of the Alan Turing Wikipedia page."
+      },
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "researcher",
+        "output": {
+          "question": "Fetch the content of the Alan Turing Wikipedia page.",
+          "sources": [
+            {
+              "url": "https://en.wikipedia.org/wiki/Alan_Turing",
+              "title": "Alan Turing - Wikipedia"
+            }
+          ],
+          "findings": "Alan Turing was born on 23 June 1912 in Maida Vale, London, England. He died on 7 June 1954 in Wilmslow, Cheshire, England.\n\nHe was a British national (specifically English)."
+        },
+        "artifacts": [],
+        "successors": [],
+        "cost": 0.0,
+        "elapsed_s": 64.05577301979065,
+        "provider": "gemini",
+        "error": null
+      },
+      "_result_typed": true,
+      "id": "n:7"
+    },
+    {
+      "skill": "distiller",
+      "inputs": [
+        "n:7"
+      ],
+      "metadata": {
+        "label": "d1",
+        "question": "Extract birth_date, death_date, birth_place, and nationality."
+      },
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "distiller",
+        "output": {
+          "fields": {
+            "birth_date": "23 June 1912",
+            "death_date": "7 June 1954",
+            "birth_place": "Maida Vale, London, England",
+            "nationality": "British"
+          },
+          "rationale": "The findings from the Alan Turing Wikipedia page provide the birth date, death date, birth place, and nationality."
+        },
+        "artifacts": [],
+        "successors": [],
+        "cost": 0.0,
+        "elapsed_s": 17.666732788085938,
+        "provider": "gemini",
+        "error": null
+      },
+      "_result_typed": true,
+      "id": "n:8"
+    },
+    {
+      "skill": "critic",
+      "inputs": [
+        "n:8"
+      ],
+      "metadata": {
+        "label": "c1",
+        "question": "Does the output contain exactly these four fields: birth_date, death_date, birth_place, nationality?"
+      },
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "critic",
+        "output": {
+          "verdict": "pass",
+          "rationale": "All required fields are present and contain correct values consistent with the Wikipedia source."
+        },
+        "artifacts": [],
+        "successors": [],
+        "cost": 0.0,
+        "elapsed_s": 2.757333993911743,
+        "provider": "groq",
+        "error": null
+      },
+      "_result_typed": true,
+      "id": "n:9"
+    },
+    {
+      "skill": "formatter",
+      "inputs": [
+        "n:9"
+      ],
+      "metadata": {
+        "label": "out"
+      },
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "formatter",
+        "output": {
+          "final_answer": "The requested biographical data for Alan Turing has been successfully extracted: { \"birth_date\": \"23 June 1912\", \"death_date\": \"7 June 1954\", \"birth_place\": \"Maida Vale, London, England\", \"nationality\": \"British\" }"
+        },
+        "artifacts": [],
+        "successors": [],
+        "cost": 0.0,
+        "elapsed_s": 2.9678075313568115,
+        "provider": "gemini",
+        "error": null
+      },
+      "_result_typed": true,
+      "id": "n:10"
+    }
+  ],
+  "edges": [
+    {
+      "source": "n:1",
+      "target": "n:2"
+    },
+    {
+      "source": "n:2",
+      "target": "n:3"
+    },
+    {
+      "source": "n:3",
+      "target": "n:4"
+    },
+    {
+      "source": "n:4",
+      "target": "n:5"
+    },
+    {
+      "source": "n:6",
+      "target": "n:7"
+    },
+    {
+      "source": "n:7",
+      "target": "n:8"
+    },
+    {
+      "source": "n:8",
+      "target": "n:9"
+    },
+    {
+      "source": "n:9",
+      "target": "n:10"
+    }
+  ]
+}

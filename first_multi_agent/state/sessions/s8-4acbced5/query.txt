@@ -1,0 +1,1 @@
+Fetch https://en.wikipedia.org/wiki/Alan_Turing and extract a structured JSON record with EXACTLY these four fields: birth_date, death_date, doctoral_advisor, paper_1936_title. Pipeline: researcher then distiller then formatter.

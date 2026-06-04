@@ -1,0 +1,278 @@
+{
+  "directed": true,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "skill": "planner",
+      "inputs": [
+        "USER_QUERY"
+      ],
+      "metadata": {},
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "planner",
+        "output": {
+          "rationale": "Since the facts are distinct and require verification, I will trigger three parallel researcher nodes to gather the specific data points, then format the results.",
+          "nodes": [
+            {
+              "skill": "researcher",
+              "inputs": [
+                "boiling point of water at sea level in degrees Celsius"
+              ],
+              "metadata": {
+                "label": "fact1"
+              }
+            },
+            {
+              "skill": "researcher",
+              "inputs": [
+                "speed of light in vacuum in metres per second"
+              ],
+              "metadata": {
+                "label": "fact2"
+              }
+            },
+            {
+              "skill": "researcher",
+              "inputs": [
+                "height of Mount Everest above sea level in metres"
+              ],
+              "metadata": {
+                "label": "fact3"
+              }
+            },
+            {
+              "skill": "formatter",
+              "inputs": [
+                "n:fact1",
+                "n:fact2",
+                "n:fact3"
+              ],
+              "metadata": {
+                "label": "out"
+              }
+            }
+          ]
+        },
+        "artifacts": [],
+        "successors": [
+          {
+            "skill": "researcher",
+            "inputs": [
+              "boiling point of water at sea level in degrees Celsius"
+            ],
+            "metadata": {
+              "label": "fact1"
+            }
+          },
+          {
+            "skill": "researcher",
+            "inputs": [
+              "speed of light in vacuum in metres per second"
+            ],
+            "metadata": {
+              "label": "fact2"
+            }
+          },
+          {
+            "skill": "researcher",
+            "inputs": [
+              "height of Mount Everest above sea level in metres"
+            ],
+            "metadata": {
+              "label": "fact3"
+            }
+          },
+          {
+            "skill": "formatter",
+            "inputs": [
+              "n:fact1",
+              "n:fact2",
+              "n:fact3"
+            ],
+            "metadata": {
+              "label": "out"
+            }
+          }
+        ],
+        "cost": 0.0,
+        "elapsed_s": 3.309852361679077,
+        "provider": "gemini",
+        "error": null
+      },
+      "_result_typed": true,
+      "id": "n:1"
+    },
+    {
+      "skill": "researcher",
+      "inputs": [
+        "n:1"
+      ],
+      "metadata": {
+        "label": "fact1"
+      },
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "researcher",
+        "output": {
+          "question": "Independently look up three unrelated facts: (1) the boiling point of water at sea level in degrees Celsius, (2) the speed of light in vacuum in metres per second, and (3) the height of Mount Everest above sea level in metres.",
+          "sources": [
+            {
+              "url": "https://en.wikipedia.org/wiki/Boiling_point",
+              "title": "Boiling point - Wikipedia"
+            },
+            {
+              "url": "https://en.wikipedia.org/wiki/Speed_of_light",
+              "title": "Speed of light - Wikipedia"
+            },
+            {
+              "url": "https://www.compoundchem.com/2016/03/22/boiling-point",
+              "title": "What Temperature Does Water Boil At? Boiling Point & Elevation"
+            }
+          ],
+          "findings": "The normal boiling point of water at sea level (standard atmospheric pressure of 1 atm or 101.325 kPa) is 100 \u00b0C. While scientific precision notes a value of 99.97 \u00b0C under these conditions, 100 \u00b0C is the standard accepted value.\n\nThe speed of light in a vacuum, denoted as c, is a universal physical constant exactly equal to 299,792,458 metres per second. This value is exact because the metre is defined based on the distance light travels in a vacuum over a specific fraction of a second.\n\nThe height of Mount Everest is officially recognized as 8,849 metres above sea level."
+        },
+        "artifacts": [],
+        "successors": [],
+        "cost": 0.0,
+        "elapsed_s": 12.30237078666687,
+        "provider": "gemini",
+        "error": null
+      },
+      "_result_typed": true,
+      "id": "n:2"
+    },
+    {
+      "skill": "researcher",
+      "inputs": [
+        "n:1"
+      ],
+      "metadata": {
+        "label": "fact2"
+      },
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "researcher",
+        "output": {
+          "question": "Independently look up three unrelated facts and report all three: (1) the boiling point of water at sea level in degrees Celsius, (2) the speed of light in vacuum in metres per second, and (3) the height of Mount Everest above sea level in metres.",
+          "sources": [
+            {
+              "url": "https://en.wikipedia.org/wiki/Boiling_point",
+              "title": "Boiling point - Wikipedia"
+            },
+            {
+              "url": "https://en.wikipedia.org/wiki/Speed_of_light",
+              "title": "Speed of light - Wikipedia"
+            }
+          ],
+          "findings": "At standard atmospheric pressure (sea level), the boiling point of water is 100 \u00b0C.\n\nThe speed of light in a vacuum is a universal physical constant exactly defined as 299,792,458 metres per second.\n\nThe height of Mount Everest above sea level is officially recognized as 8,849 metres."
+        },
+        "artifacts": [],
+        "successors": [],
+        "cost": 0.0,
+        "elapsed_s": 27.93420147895813,
+        "provider": "gemini",
+        "error": null
+      },
+      "_result_typed": true,
+      "id": "n:3"
+    },
+    {
+      "skill": "researcher",
+      "inputs": [
+        "n:1"
+      ],
+      "metadata": {
+        "label": "fact3"
+      },
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "researcher",
+        "output": {
+          "question": "Independently look up three unrelated facts: (1) boiling point of water at sea level in degrees Celsius, (2) the speed of light in vacuum in metres per second, and (3) the height of Mount Everest above sea level in metres.",
+          "sources": [
+            {
+              "url": "https://en.wikipedia.org/wiki/Boiling_point",
+              "title": "Boiling point - Wikipedia"
+            },
+            {
+              "url": "https://en.wikipedia.org/wiki/Speed_of_light",
+              "title": "Speed of light - Wikipedia"
+            },
+            {
+              "url": "https://en.wikipedia.org/wiki/Mount_Everest",
+              "title": "Mount Everest - Wikipedia"
+            }
+          ],
+          "findings": "The boiling point of water at sea level under standard atmospheric pressure (1 atm or 101.325 kPa) is 100 degrees Celsius, though it is sometimes technically defined as 99.97 \u00b0C depending on the thermodynamic scale used. Variations in atmospheric pressure significantly alter this temperature; for instance, at higher altitudes, water boils at lower temperatures.\n\nThe speed of light in a vacuum, denoted by the constant 'c', is defined exactly as 299,792,458 metres per second. This value is exact because the metre itself is defined based on the distance light travels in a vacuum during a specific time interval (1/299,792,458 of a second).\n\nThe official elevation of Mount Everest above sea level is 8,848.86 metres (29,031.7 feet), as determined by a joint survey announced by Nepal and China in 2020. This measurement represents the height of the mountain's peak above the geoid (mean sea level)."
+        },
+        "artifacts": [],
+        "successors": [],
+        "cost": 0.0,
+        "elapsed_s": 32.28221154212952,
+        "provider": "gemini",
+        "error": null
+      },
+      "_result_typed": true,
+      "id": "n:4"
+    },
+    {
+      "skill": "formatter",
+      "inputs": [
+        "n:2",
+        "n:3",
+        "n:4"
+      ],
+      "metadata": {
+        "label": "out"
+      },
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "formatter",
+        "output": {
+          "final_answer": "Here are the requested facts:\n\n1. Boiling point of water at sea level: 100 \u00b0C (under standard atmospheric pressure).\n2. Speed of light in a vacuum: Exactly 299,792,458 metres per second.\n3. Height of Mount Everest: 8,848.86 metres above sea level.\n\nSources: Wikipedia (Boiling point, Speed of light, Mount Everest), CompoundChem."
+        },
+        "artifacts": [],
+        "successors": [],
+        "cost": 0.0,
+        "elapsed_s": 3.3546464443206787,
+        "provider": "gemini",
+        "error": null
+      },
+      "_result_typed": true,
+      "id": "n:5"
+    }
+  ],
+  "edges": [
+    {
+      "source": "n:1",
+      "target": "n:2"
+    },
+    {
+      "source": "n:1",
+      "target": "n:3"
+    },
+    {
+      "source": "n:1",
+      "target": "n:4"
+    },
+    {
+      "source": "n:2",
+      "target": "n:5"
+    },
+    {
+      "source": "n:3",
+      "target": "n:5"
+    },
+    {
+      "source": "n:4",
+      "target": "n:5"
+    }
+  ]
+}
