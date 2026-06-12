@@ -6,9 +6,9 @@ comparison table plus a self-contained replay viewer.
 
 All eight sections are emitted by [html_replay.py](html_replay.py) into a
 single offline-viewable file at
-[state/sessions/s8-58cb175c/output/report.html](state/sessions/s8-58cb175c/output/report.html),
+[output/s8-58cb175c/output/report.html](output/s8-58cb175c/output/report.html),
 and narrated by [make_demo_video.py](make_demo_video.py) into
-[state/sessions/s8-58cb175c/output/demo.mp4](state/sessions/s8-58cb175c/output/demo.mp4).
+[output/s8-58cb175c/output/demo.mp4](output/s8-58cb175c/output/demo.mp4).
 
 ---
 
@@ -35,14 +35,14 @@ Every link points to the actual file on disk.
 
 | # | Section | Value (from `s8-58cb175c`) | Source file |
 |---|---|---|---|
-| 1 | **Original user goal** | "Compare flights from Bengaluru (BLR) to London (LHR), departing 25 June 2026 and returning 30 June 2026 … Read the top three flight cards … Flight numbers are NOT required." | [state/sessions/s8-58cb175c/query.txt](state/sessions/s8-58cb175c/query.txt) |
-| 2 | **Planner DAG** | 9 nodes / 7 edges — `n:1 planner → n:2 browser` (failed, Playwright context destroyed) → recovery → `n:5 planner → n:6 browser → n:7 distiller → n:9 critic (pass) → n:8 formatter` | [state/sessions/s8-58cb175c/graph.json](state/sessions/s8-58cb175c/graph.json) |
-| 3 | **Browser path chosen** | `vision` (L3 — Playwright + V9 `/v1/vision` with SoM markers, on `www.google.com/travel/flights`) | [state/sessions/s8-58cb175c/nodes/n_006.json](state/sessions/s8-58cb175c/nodes/n_006.json) |
-| 4 | **Browser actions taken** | 4 turns — `turn 1: scroll down [3]` → `turn 2: click [2]` → `turn 3: scroll down [0]` → `turn 4: done` (outcome `done(True)`) | [state/sessions/s8-58cb175c/nodes/n_006.json](state/sessions/s8-58cb175c/nodes/n_006.json) |
-| 5 | **Screenshots / page-state logs** | 4 marked frames + 4 raw frames + 4 SoM snapshots | [state/sessions/s8-58cb175c/browser/browser_1781259339/vision/](state/sessions/s8-58cb175c/browser/browser_1781259339/vision/) ([turn_01_marked.png](state/sessions/s8-58cb175c/browser/browser_1781259339/vision/turn_01_marked.png), [turn_04_marked.png](state/sessions/s8-58cb175c/browser/browser_1781259339/vision/turn_04_marked.png)) |
-| 6 | **Extracted data** | `flight_1` Etihad £536 / 1 stop AUH / 12h 40m  ·  `flight_2` Etihad £539 / 1 stop AUH / 13h 15m  ·  `flight_3` British Airways £706 / Nonstop / 10h 55m | [state/sessions/s8-58cb175c/nodes/n_007.json](state/sessions/s8-58cb175c/nodes/n_007.json) |
-| 7 | **Final comparison table** | See table below (`final_answer` from formatter `n:8`) | [state/sessions/s8-58cb175c/nodes/n_008.json](state/sessions/s8-58cb175c/nodes/n_008.json) |
-| 8 | **Turn count and cost summary** | 4 browser turns  ·  total LLM cost **$0.001078** (browser/vision only; planner, distiller, critic, formatter all $0 on Groq) | [state/sessions/s8-58cb175c/output/report.html](state/sessions/s8-58cb175c/output/report.html) |
+| 1 | **Original user goal** | "Compare flights from Bengaluru (BLR) to London (LHR), departing 25 June 2026 and returning 30 June 2026 … Read the top three flight cards … Flight numbers are NOT required." | [output/s8-58cb175c/query.txt](output/s8-58cb175c/query.txt) |
+| 2 | **Planner DAG** | 9 nodes / 7 edges — `n:1 planner → n:2 browser` (failed, Playwright context destroyed) → recovery → `n:5 planner → n:6 browser → n:7 distiller → n:9 critic (pass) → n:8 formatter` | [output/s8-58cb175c/graph.json](output/s8-58cb175c/graph.json) |
+| 3 | **Browser path chosen** | `vision` (L3 — Playwright + V9 `/v1/vision` with SoM markers, on `www.google.com/travel/flights`) | [output/s8-58cb175c/nodes/n_006.json](output/s8-58cb175c/nodes/n_006.json) |
+| 4 | **Browser actions taken** | 4 turns — `turn 1: scroll down [3]` → `turn 2: click [2]` → `turn 3: scroll down [0]` → `turn 4: done` (outcome `done(True)`) | [output/s8-58cb175c/nodes/n_006.json](output/s8-58cb175c/nodes/n_006.json) |
+| 5 | **Screenshots / page-state logs** | 4 marked frames + 4 raw frames + 4 SoM snapshots | [output/s8-58cb175c/browser/browser_1781259339/vision/](output/s8-58cb175c/browser/browser_1781259339/vision/) ([turn_01_marked.png](output/s8-58cb175c/browser/browser_1781259339/vision/turn_01_marked.png), [turn_04_marked.png](output/s8-58cb175c/browser/browser_1781259339/vision/turn_04_marked.png)) |
+| 6 | **Extracted data** | `flight_1` Etihad £536 / 1 stop AUH / 12h 40m  ·  `flight_2` Etihad £539 / 1 stop AUH / 13h 15m  ·  `flight_3` British Airways £706 / Nonstop / 10h 55m | [output/s8-58cb175c/nodes/n_007.json](output/s8-58cb175c/nodes/n_007.json) |
+| 7 | **Final comparison table** | See table below (`final_answer` from formatter `n:8`) | [output/s8-58cb175c/nodes/n_008.json](output/s8-58cb175c/nodes/n_008.json) |
+| 8 | **Turn count and cost summary** | 4 browser turns  ·  total LLM cost **$0.001078** (browser/vision only; planner, distiller, critic, formatter all $0 on Groq) | [output/s8-58cb175c/output/report.html](output/s8-58cb175c/output/report.html) |
 
 **Final comparison table (§ 7) verbatim:**
 
@@ -54,7 +54,7 @@ Every link points to the actual file on disk.
 
 > **Recommendation:** If you prioritize convenience and speed over cost, the British Airways flight is the best choice as it is the only nonstop option and offers the shortest travel time.
 
-Full replay viewer: [state/sessions/s8-58cb175c/output/report.html](state/sessions/s8-58cb175c/output/report.html).
+Full replay viewer: [output/s8-58cb175c/output/report.html](output/s8-58cb175c/output/report.html).
 
 ---
 
@@ -148,7 +148,7 @@ mapping back to the spec is direct.
 
 ## Narrated demo video
 
-**▶ Watch the demo:** [state/sessions/s8-58cb175c/output/demo.mp4](state/sessions/s8-58cb175c/output/demo.mp4)
+**▶ Watch the demo:** [output/s8-58cb175c/output/demo.mp4](output/s8-58cb175c/output/demo.mp4)
 
 ---
 

@@ -1,0 +1,22 @@
+[1]<button>Language: English</button>
+[2]<li role="menuitem">English United States</li>
+[3]<li role="menuitem">Deutsch</li>
+[4]<li role="menuitem">English</li>
+[5]<li role="menuitem">Español</li>
+[6]<li role="menuitem">Français</li>
+[7]<li role="menuitem">Italiano</li>
+[8]<li role="menuitem">العربية</li>
+[9]<li role="menuitem">All languages</li>
+[10]<li role="menuitem">Afrikaans</li>
+[11]<li role="menuitem">azərbaycan</li>
+[12]<li role="menuitem">bosanski</li>
+[13]<li role="menuitem">català</li>
+[14]<li role="menuitem">Čeština</li>
+[15]<li role="menuitem">Cymraeg</li>
+[16]<li role="menuitem">Dansk</li>
+[17]<li role="menuitem">Deutsch</li>
+[18]<li role="menuitem">eesti</li>
+[19]<a>Sign in</a>
+[20]<a>cookies</a>
+[21]<span></span>
+[22]<span>Sign in</span>

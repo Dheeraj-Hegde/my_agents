@@ -1,0 +1,176 @@
+[1]<div role="button">Main menu</div>
+[2]<a>Google</a>
+[3]<button>Skip to main content</button>
+[4]<button>Accessibility feedback</button>
+[5]<button role="link">Explore</button>
+[6]<button role="link">Flights</button>
+[7]<button role="link">Hotels</button>
+[8]<button role="link">Vacation rentals</button>
+[9]<button>Change appearance</button>
+[10]<a role="button">Google apps</a>
+[11]<a>Sign in</a>
+[12]<div role="link">From 706 British pounds round trip total. Nonstop flight with British Airways. L</div>
+[13]<div role="button">Carbon emissions estimate: 484 kilograms. -15% emissions. Learn more about this </div>
+[14]<button>Flight details. Leaves Kempegowda International Airport Bengaluru at 6:50 AM on </button>
+[15]<button>View price history</button>
+[16]<span role="button">Learn more about tracked prices</span>
+[17]<button role="switch">Track prices from Bengaluru to London departing 2026-06-25 and returning 2026-06</button>
+[18]<button role="switch">Track prices from Bengaluru to London - Any dates</button>
+[19]<button>Date grid</button>
+[20]<button>Price graph</button>
+[21]<div role="link">From 536 British pounds round trip total. 1 stop flight with Etihad. Leaves Kemp</div>
+[22]<div role="button">Carbon emissions estimate: 600 kilograms. +6% emissions. Learn more about this e</div>
+[23]<button>Flight details. Leaves Kempegowda International Airport Bengaluru at 4:55 PM on </button>
+[24]<div role="link">From 536 British pounds round trip total. 1 stop flight with Etihad. Leaves Kemp</div>
+[25]<div role="button">Carbon emissions estimate: 604 kilograms. +7% emissions. Learn more about this e</div>
+[26]<button>Flight details. Leaves Kempegowda International Airport Bengaluru at 10:15 PM on</button>
+[27]<div role="link">From 568 British pounds round trip total. 1 stop flight with IndiGo. Operated by</div>
+[28]<div role="button">Carbon emissions estimate: 508 kilograms. -10% emissions. Learn more about this </div>
+[29]<button>Flight details. Leaves Kempegowda International Airport Bengaluru at 10:00 PM on</button>
+[30]<div role="link">From 591 British pounds round trip total. 1 stop flight with Qatar Airways. Leav</div>
+[31]<div role="button">Carbon emissions estimate: 570 kilograms. Average emissions. Learn more about th</div>
+[32]<button>Flight details. Leaves Kempegowda International Airport Bengaluru at 4:00 AM on </button>
+[33]<div role="link">From 669 British pounds round trip total. 1 stop flight with Emirates. Leaves Ke</div>
+[34]<div role="button">Carbon emissions estimate: 560 kilograms. Average emissions. Learn more about th</div>
+[35]<button>Flight details. Leaves Kempegowda International Airport Bengaluru at 10:30 AM on</button>
+[36]<div role="link">From 701 British pounds round trip total. 1 stop flight with Emirates. Leaves Ke</div>
+[37]<div role="button">Carbon emissions estimate: 621 kilograms. +10% emissions. Learn more about this </div>
+[38]<button>Flight details. Leaves Kempegowda International Airport Bengaluru at 4:45 AM on </button>
+[39]<div role="link">From 774 British pounds round trip total. Nonstop flight with Air India. Leaves </div>
+[40]<div role="button">Carbon emissions estimate: 508 kilograms. -10% emissions. Learn more about this </div>
+[41]<button>Flight details. Leaves Kempegowda International Airport Bengaluru at 1:45 PM on </button>
+[42]<div role="link">From 803 British pounds round trip total. Nonstop flight with Virgin Atlantic. L</div>
+[43]<div role="button">Carbon emissions estimate: 472 kilograms. -17% emissions. Learn more about this </div>
+[44]<button>Flight details. Leaves Kempegowda International Airport Bengaluru at 8:00 AM on </button>
+[45]<div role="link">From 858 British pounds round trip total. Nonstop flight with British Airways. L</div>
+[46]<div role="button">Carbon emissions estimate: 484 kilograms. -15% emissions. Learn more about this </div>
+[47]<button>Flight details. Leaves Kempegowda International Airport Bengaluru at 3:00 AM on </button>
+[48]<div role="presentation"></div>
+[49]<span>British Airways</span>
+[50]<span>BLR</span>
+[51]<span>LHR</span>
+[52]<span>-15% emissions</span>
+[53]<div>round trip</div>
+[54]<span>5 months</span>
+[55]<div role="presentation"></div>
+[56]<span>typical</span>
+[57]<div>View price history</div>
+[58]<div>Jun 25 – 30</div>
+[59]<span>Any dates</span>
+[60]<div role="presentation"></div>
+[61]<span role="text">Departure time: 4:55 PM.</span>
+[62]<span>+1</span>
+[63]<span>Etihad</span>
+[64]<div>Total duration 26 hr 40 min.</div>
+[65]<span>BLR</span>
+[66]<span>LHR</span>
+[67]<span>1 stop flight.</span>
+[68]<span>AUH</span>
+[69]<div>600 kg CO2e</div>
+[70]<span>+6% emissions</span>
+[71]<span role="text">536 British pounds</span>
+[72]<div>round trip</div>
+[73]<div role="presentation"></div>
+[74]<span role="text">Departure time: 10:15 PM.</span>
+[75]<span>+1</span>
+[76]<span>Etihad</span>
+[77]<div>Total duration 25 hr.</div>
+[78]<span>BLR</span>
+[79]<span>LHR</span>
+[80]<span>1 stop flight.</span>
+[81]<span>AUH</span>
+[82]<div>604 kg CO2e</div>
+[83]<span>+7% emissions</span>
+[84]<span role="text">536 British pounds</span>
+[85]<div>round trip</div>
+[86]<div role="presentation"></div>
+[87]<span role="text">Departure time: 10:00 PM.</span>
+[88]<span>+1</span>
+[89]<span>IndiGo</span>
+[90]<span>Operated by Under Lease From Norse</span>
+[91]<div>Total duration 24 hr 15 min.</div>
+[92]<span>BLR</span>
+[93]<span>LHR</span>
+[94]<span>1 stop flight.</span>
+[95]<span>DEL</span>
+[96]<div>508 kg CO2e</div>
+[97]<span>-10% emissions</span>
+[98]<span role="text">568 British pounds</span>
+[99]<div>round trip</div>
+[100]<div role="presentation"></div>
+[101]<span role="text">Departure time: 4:00 AM.</span>
+[102]<span role="text">Arrival time: 6:00 PM.</span>
+[103]<span>Qatar Airways</span>
+[104]<span>British Airways</span>
+[105]<div>Total duration 18 hr 30 min.</div>
+[106]<span>BLR</span>
+[107]<span>LHR</span>
+[108]<span>1 stop flight.</span>
+[109]<span>DOH</span>
+[110]<div>570 kg CO2e</div>
+[111]<span>Avg emissions</span>
+[112]<span role="text">591 British pounds</span>
+[113]<div>round trip</div>
+[114]<div role="presentation"></div>
+[115]<span role="text">Departure time: 10:30 AM.</span>
+[116]<span role="text">Arrival time: 7:45 PM.</span>
+[117]<span>Emirates</span>
+[118]<span>Qantas</span>
+[119]<div>Total duration 13 hr 45 min.</div>
+[120]<span>BLR</span>
+[121]<span>LGW</span>
+[122]<span>1 stop flight.</span>
+[123]<span>DXB</span>
+[124]<div>560 kg CO2e</div>
+[125]<span>Avg emissions</span>
+[126]<span role="text">669 British pounds</span>
+[127]<div>round trip</div>
+[128]<div role="presentation"></div>
+[129]<span role="text">Departure time: 4:45 AM.</span>
+[130]<span role="text">Arrival time: 12:55 PM.</span>
+[131]<span>Emirates</span>
+[132]<div>Total duration 12 hr 40 min.</div>
+[133]<span>BLR</span>
+[134]<span>STN</span>
+[135]<span>1 stop flight.</span>
+[136]<span>DXB</span>
+[137]<div>621 kg CO2e</div>
+[138]<span>+10% emissions</span>
+[139]<span role="text">701 British pounds</span>
+[140]<div>round trip</div>
+[141]<div role="presentation"></div>
+[142]<span role="text">Departure time: 1:45 PM.</span>
+[143]<span role="text">Arrival time: 8:20 PM.</span>
+[144]<span>Air India</span>
+[145]<div>Total duration 11 hr 5 min.</div>
+[146]<span>BLR</span>
+[147]<span>LHR</span>
+[148]<span>Nonstop flight.</span>
+[149]<div>508 kg CO2e</div>
+[150]<span>-10% emissions</span>
+[151]<span role="text">774 British pounds</span>
+[152]<div>round trip</div>
+[153]<div role="presentation"></div>
+[154]<span role="text">Departure time: 8:00 AM.</span>
+[155]<span role="text">Arrival time: 2:35 PM.</span>
+[156]<span>Virgin Atlantic</span>
+[157]<div>Total duration 11 hr 5 min.</div>
+[158]<span>BLR</span>
+[159]<span>LHR</span>
+[160]<span>Nonstop flight.</span>
+[161]<div>472 kg CO2e</div>
+[162]<span>-17% emissions</span>
+[163]<span role="text">803 British pounds</span>
+[164]<div>round trip</div>
+[165]<div role="presentation"></div>
+[166]<span role="text">Departure time: 3:00 AM.</span>
+[167]<span role="text">Arrival time: 9:15 AM.</span>
+[168]<span>British Airways</span>
+[169]<div>Total duration 10 hr 45 min.</div>
+[170]<span>BLR</span>
+[171]<span>LHR</span>
+[172]<span>Nonstop flight.</span>
+[173]<div>484 kg CO2e</div>
+[174]<span>-15% emissions</span>
+[175]<span role="text">858 British pounds</span>
+[176]<div>round trip</div>

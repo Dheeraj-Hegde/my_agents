@@ -1,0 +1,75 @@
+{
+  "node_id": "n:6",
+  "skill": "browser",
+  "status": "complete",
+  "inputs": [],
+  "result": {
+    "success": true,
+    "agent_name": "browser",
+    "output": {
+      "url": "https://www.google.com/travel/flights?q=Flights+from+Bengaluru+to+London+on+2026-06-25+through+2026-06-30",
+      "goal": "Dismiss any consent banners, wait for the flight results to load, and extract the airline, total price, layover summary, and total travel time for the top three visible flight cards.",
+      "path": "vision",
+      "turns": 4,
+      "content": "Search results\n13 results returned.\nBest\nLooking for stress-free travel? These flights are chosen to balance price and convenience, taking into account factors such as duration and number of stops to keep your journey smooth and affordable.\n[Learn more](https://support.google.com/travel/answer/7664728?ref_topic=2475360&hl=en-US)Cheapest\nfrom £536\nFetching results\nLooking for the lowest fares? These additional budget picks help you save but may involve trade-offs, such as flying back to a different airport in the same city you departed from, self-transferring luggage, or booking via a third-party site.\n[Learn more](https://support.google.com/travel/answer/7664728?ref_topic=2475360&hl=en-US)Top departing flights\nRanked based on price and conveniencePrices include required taxes + fees for 1 adult. Optional charges and bag fees may apply. Passenger assistance info.\n“Top flights” are ranked based on the best trade-off between price and convenience factors such as duration, number of stops, and airport changes during layovers. All other flights are ranked by price. [Learn more](https://support.google.com/travel/answer/7664728?ref_topic=2475360&hl=en-US)\n- 4:35 AM – 12:45 PMEtihad12 hr 40 min1 stop1 hr 10 min AUH£536round tripDepartureThu, Jun 25£536round trip4:35 AMBLR12:45 PMLHR£536round trip1 stop in AUH1 stop12 hr 40 minEtihad\n- 10:15 PM – 7:00 AM+1Etihad13 hr 15 min1 stop1 hr 45 min AUH£539round tripDepartureThu, Jun 25£539round trip10:15 PMBLR7:00 AM+1LHR£539round trip1 stop in AUH1 stop13 hr 15 minEtihad\n- 6:50 AM – 1:15 PMBritish Airways10 hr 55 minNonstop£706round tripDepartureThu, Jun 25£706round trip6:50 AMBLR1:15 PMLHR£706round tripNonstopNonstop10 hr 55 minBritish Airways\nPrice insights\nThe cheapest time to book is usually earlier, up to 5 months before takeoff\nPrices are currently typical\nTrack prices\nTrack prices from Bengaluru to London departing 2026-06-25 and returning 2026-06-30Track prices from Bengaluru to London - Any dates\nGet email updates when prices change for your searched dates. You’ll also get travel tips by email.\nOr, track any dates to get regular email updates when prices are low for Bengaluru – London.\nOther departing flights\n- 4:55 PM – 3:05 PM+1Etihad26 hr 40 min1 stop15 hr 25 min AUH£536round tripDepartureThu, Jun 25£536round trip4:55 PMBLR3:05 PM+1LHR£536round trip1 stop in AUH1 stop26 hr 40 minEtihad\n- 10:15 PM – 6:45 PM+1Etihad25 hr1 stop13 hr 35 min AUH£536round tripDepartureThu, Jun 25£536round trip10:15 PMBLR6:45 PM+1LHR£536round trip1 stop in AUH1 stop25 hrEtihad\n- 10:00 PM – 5:45 PM+1IndiGoOperated by Under Lease From Norse24 hr 15 min1 stop10 hr DEL£568round tripDepartureThu, Jun 25£568round trip10:00 PMBLR5:45 PM+1LHR£568round trip1 stop in DEL1 stop24 hr 15 minIndiGoOperated by Under Lease From Norse\n- 4:00 AM – 6:00 PMQatar AirwaysBritish Airways18 hr 30 min1 stop7 hr 15 min DOH£591round tripDepartureThu, Jun 25£591round trip4:00 AMBLR6:00 PMLHR£591round trip1 stop in DOH1 stop18 hr 30 minQatar AirwaysBritish Airways\n- 10:30 AM – 7:45 PMEmiratesQantas13 hr 45 min1 stop2 hr 15 min DXB£669round tripDepartureThu, Jun 25£669round trip10:30 AMBLR7:45 PMLGW£669round trip1 stop in DXB1 stop13 hr 45 minEmiratesQantas\n- 4:45 AM – 12:55 PMEmirates12 hr 40 min1 stop1 hr 5 min DXB£701round tripDepartureThu, Jun 25£701round trip4:45 AMBLR12:55 PMSTN£701round trip1 stop in DXB1 stop12 hr 40 minEmirates\n- 1:45 PM – 8:20 PMAir India11 hr 5 minNonstop£774round tripDepartureThu, Jun 25£774round trip1:45 PMBLR8:20 PMLHR£774round tripNonstopNonstop11 hr 5 minAir India\n- 8:00 AM – 2:35 PMVirgin Atlantic11 hr 5 minNonstop£803round tripDepartureThu, Jun 25£803round trip8:00 AMBLR2:35 PMLHR£803round tripNonstopNonstop11 hr 5 minVirgin Atlantic\n- 3:00 AM – 9:15 AMBritish Airways10 hr 45 minNonstop£858round tripDepartureThu, Jun 25£858round trip3:00 AMBLR9:15 AMLHR£858round tripNonstopNonstop10 hr 45 minBritish Airways\n- 2:50 PM – 9:05 PMVirgin Atlantic10 hr 45 minNonstop£860round tripDepartureThu, Jun 25£860round trip2:50 PMBLR9:05 PMLHR£860round tripNonstopNonstop10 hr 45 minVirgin Atlantic",
+      "actions": [
+        {
+          "turn": 1,
+          "actions": [
+            {
+              "type": "scroll",
+              "direction": "down",
+              "mark": 3
+            }
+          ],
+          "outcome": "ok"
+        },
+        {
+          "turn": 2,
+          "actions": [
+            {
+              "type": "click",
+              "mark": 2
+            }
+          ],
+          "outcome": "ok"
+        },
+        {
+          "turn": 3,
+          "actions": [
+            {
+              "type": "scroll",
+              "direction": "down",
+              "mark": 0,
+              "value": "500"
+            }
+          ],
+          "outcome": "ok"
+        },
+        {
+          "turn": 4,
+          "actions": [
+            {
+              "type": "done",
+              "success": true,
+              "value": "Flight 1: Airline: Etihad, Price: 536 British pounds, Layover: 1 stop, Duration: 26 hr 40 min. Flight 2: Airline: Etihad, Price: 536 British pounds, Layover: 1 stop, Duration: 25 hr. Flight 3: Airline: IndiGo, Price: 568 British pounds, Layover: 1 stop, Duration: 24 hr 15 min."
+            }
+          ],
+          "outcome": "done(True)"
+        }
+      ],
+      "final_url": "https://www.google.com/travel/flights?q=Flights+from+Bengaluru+to+London+on+2026-06-25+through+2026-06-30"
+    },
+    "artifacts": [],
+    "successors": [],
+    "cost": 0.001078,
+    "elapsed_s": 37.19372320175171,
+    "provider": "gemini",
+    "error": null,
+    "error_code": null
+  },
+  "prompt_sent": "The Browser skill fetches and interacts with web pages. It walks a\nfour-layer cascade starting from the cheapest path (HTML extraction)\nand escalating only when needed (deterministic selectors, accessibility\ntree, then visual set-of-marks with a vision model). The escalation\nis internal; you pass `url` and `goal`, the skill chooses the layer.\n\nInputs: `metadata.url` (required), `metadata.goal` (required, free-text\ndescription of what to extract or do). Output: `BrowserOutput` with\n`content` (for extraction goals) or `actions` plus `final_url` (for\ninteraction goals), and `path` reporting the cascade layer that\nactually ran. When the page is gated by CAPTCHA or login, the skill\nreturns `error_code=\"gateway_blocked\"` and no content; the Planner\nshould route around by trying a different source URL or by handing\nback to the user.\n\nTODAY: 2026-06-12\n\nMEMORY HITS (6 from FAISS):\n  - [fact] Today is 12 June 2026. Open Google Flights and navigate the search results to compare flights from Bengaluru (BLR) to London (LHR), departing 25 June 2026 (13 days from today) and returning 30 June 20\n      source: user_query\n      raw: Today is 12 June 2026. Open Google Flights and navigate the search results to compare flights from Bengaluru (BLR) to London (LHR), departing 25 June 2026 (13 days from today) and returning 30 June 2026. On the page, sort by price, filter for the cheapest options, and click through the top three flight cards. Extract the airline / flight number, total price, layover (city + duration or 'Nonstop'), and total travel time for each. Produce the final answer as a Markdown comparison table with columns: Rank | Airline / Flight | Price | Layover | Total Travel Time, sorted cheapest first.\n  - [tool_outcome] Flight comparison from Bengaluru BLR to London LHR for 25 June 2026 to 30 June 2026\n      source: user_query\n      raw: Compare flights for 2026-06-25 (depart) to 2026-06-30 (return) from Bengaluru (BLR) to London (LHR). Extract the top three flights and compare them on price, layover time and total travel time. Produce the comparison as a Markdown table with columns: Rank | Airline / Flight | Price | Layover | Total Travel Time.\n  - [fact] Compare 3 laptops under ₹80,000\n      source: user_query\n      raw: Compare 3 laptops under ₹80,000\n  - [preference] Compare 3 laptops under ₹80,000\n      source: user_query\n      raw: Compare 3 laptops under ₹80,000\n  - [fact] User greeting 'hello'\n      source: user_query\n      raw: hello\n  - [fact] User greeting 'hello'\n      source: user_query\n      raw: hello\n\nINPUTS:\n[]",
+  "started_at": 1781259339.9217157,
+  "completed_at": 1781259377.115439,
+  "retries": 0
+}

@@ -1,0 +1,9 @@
+[1]<input>Email or phone</input>
+[2]<button>Forgot email?</button>
+[3]<a>Learn more about using Guest mode (external, opens in a new window)</a>
+[4]<button>Next</button>
+[5]<button>Create account</button>
+[6]<div role="combobox">English (United States)</div>
+[7]<a>Open Google Account Help Center (external, opens in a new window)</a>
+[8]<a>Privacy Policy (external, opens in a new window)</a>
+[9]<a>Google Terms of Service (external, opens in a new window)</a>

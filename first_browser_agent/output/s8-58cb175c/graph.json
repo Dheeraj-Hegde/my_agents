@@ -1,0 +1,437 @@
+{
+  "directed": true,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "skill": "planner",
+      "inputs": [
+        "USER_QUERY"
+      ],
+      "metadata": {},
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "planner",
+        "output": {
+          "rationale": "Use the browser to fetch the flight results from the provided URL, distill the top three flight cards into structured data, and format the final comparison table.",
+          "nodes": [
+            {
+              "skill": "browser",
+              "inputs": [],
+              "metadata": {
+                "label": "flight_search",
+                "url": "https://www.google.com/travel/flights?q=Flights+from+Bengaluru+to+London+on+2026-06-25+through+2026-06-30",
+                "goal": "Dismiss any consent banners, then extract the airline, total price, layover summary, and total travel time for the top three flight cards visible on the results list."
+              }
+            },
+            {
+              "skill": "distiller",
+              "inputs": [
+                "n:flight_search"
+              ],
+              "metadata": {
+                "label": "distilled_flights",
+                "question": "Extract the airline, price, layover, and travel time for the top 3 flights into a structured list."
+              }
+            },
+            {
+              "skill": "formatter",
+              "inputs": [
+                "USER_QUERY",
+                "n:distilled_flights"
+              ],
+              "metadata": {
+                "label": "final_output"
+              }
+            }
+          ]
+        },
+        "artifacts": [],
+        "successors": [
+          {
+            "skill": "browser",
+            "inputs": [],
+            "metadata": {
+              "label": "flight_search",
+              "url": "https://www.google.com/travel/flights?q=Flights+from+Bengaluru+to+London+on+2026-06-25+through+2026-06-30",
+              "goal": "Dismiss any consent banners, then extract the airline, total price, layover summary, and total travel time for the top three flight cards visible on the results list."
+            }
+          },
+          {
+            "skill": "distiller",
+            "inputs": [
+              "n:flight_search"
+            ],
+            "metadata": {
+              "label": "distilled_flights",
+              "question": "Extract the airline, price, layover, and travel time for the top 3 flights into a structured list."
+            }
+          },
+          {
+            "skill": "formatter",
+            "inputs": [
+              "USER_QUERY",
+              "n:distilled_flights"
+            ],
+            "metadata": {
+              "label": "final_output"
+            }
+          }
+        ],
+        "cost": 0.0,
+        "elapsed_s": 3.529733896255493,
+        "provider": "gemini",
+        "error": null,
+        "error_code": null
+      },
+      "_result_typed": true,
+      "id": "n:1"
+    },
+    {
+      "skill": "browser",
+      "inputs": [],
+      "metadata": {
+        "label": "flight_search",
+        "url": "https://www.google.com/travel/flights?q=Flights+from+Bengaluru+to+London+on+2026-06-25+through+2026-06-30",
+        "goal": "Dismiss any consent banners, then extract the airline, total price, layover summary, and total travel time for the top three flight cards visible on the results list."
+      },
+      "status": "failed",
+      "result": {
+        "success": false,
+        "agent_name": "browser",
+        "output": {},
+        "artifacts": [],
+        "successors": [],
+        "cost": 0.0,
+        "elapsed_s": 0.0,
+        "provider": "",
+        "error": "exception: Error: Page.evaluate: Execution context was destroyed, most likely because of a navigation",
+        "error_code": null
+      },
+      "_result_typed": true,
+      "id": "n:2"
+    },
+    {
+      "skill": "distiller",
+      "inputs": [
+        "n:2"
+      ],
+      "metadata": {
+        "label": "distilled_flights",
+        "question": "Extract the airline, price, layover, and travel time for the top 3 flights into a structured list."
+      },
+      "status": "pending",
+      "id": "n:3"
+    },
+    {
+      "skill": "formatter",
+      "inputs": [
+        "USER_QUERY",
+        "n:3"
+      ],
+      "metadata": {
+        "label": "final_output"
+      },
+      "status": "pending",
+      "id": "n:4"
+    },
+    {
+      "skill": "planner",
+      "inputs": [
+        "USER_QUERY"
+      ],
+      "metadata": {
+        "failure_report": "node=n:2 skill=browser reason=upstream_failure error=exception: Error: Page.evaluate: Execution context was destroyed, most likely because of a navigation",
+        "recovers": "n:2",
+        "recovery_reason": "upstream_failure",
+        "prior_complete": []
+      },
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "planner",
+        "output": {
+          "rationale": "The previous browser attempt failed due to a navigation error. I will retry the browser skill on the same URL to capture the flight data, then use a distiller to structure the results before formatting.",
+          "nodes": [
+            {
+              "skill": "browser",
+              "inputs": [],
+              "metadata": {
+                "label": "b1",
+                "url": "https://www.google.com/travel/flights?q=Flights+from+Bengaluru+to+London+on+2026-06-25+through+2026-06-30",
+                "goal": "Dismiss any consent banners, wait for the flight results to load, and extract the airline, total price, layover summary, and total travel time for the top three visible flight cards."
+              }
+            },
+            {
+              "skill": "distiller",
+              "inputs": [
+                "n:b1"
+              ],
+              "metadata": {
+                "label": "d1",
+                "question": "Extract the top 3 flight results into a structured list containing: airline, price, layover, and total travel time."
+              }
+            },
+            {
+              "skill": "formatter",
+              "inputs": [
+                "USER_QUERY",
+                "n:d1"
+              ],
+              "metadata": {
+                "label": "out"
+              }
+            }
+          ]
+        },
+        "artifacts": [],
+        "successors": [
+          {
+            "skill": "browser",
+            "inputs": [],
+            "metadata": {
+              "label": "b1",
+              "url": "https://www.google.com/travel/flights?q=Flights+from+Bengaluru+to+London+on+2026-06-25+through+2026-06-30",
+              "goal": "Dismiss any consent banners, wait for the flight results to load, and extract the airline, total price, layover summary, and total travel time for the top three visible flight cards."
+            }
+          },
+          {
+            "skill": "distiller",
+            "inputs": [
+              "n:b1"
+            ],
+            "metadata": {
+              "label": "d1",
+              "question": "Extract the top 3 flight results into a structured list containing: airline, price, layover, and total travel time."
+            }
+          },
+          {
+            "skill": "formatter",
+            "inputs": [
+              "USER_QUERY",
+              "n:d1"
+            ],
+            "metadata": {
+              "label": "out"
+            }
+          }
+        ],
+        "cost": 0.0,
+        "elapsed_s": 3.508173942565918,
+        "provider": "gemini",
+        "error": null,
+        "error_code": null
+      },
+      "_result_typed": true,
+      "id": "n:5"
+    },
+    {
+      "skill": "browser",
+      "inputs": [],
+      "metadata": {
+        "label": "b1",
+        "url": "https://www.google.com/travel/flights?q=Flights+from+Bengaluru+to+London+on+2026-06-25+through+2026-06-30",
+        "goal": "Dismiss any consent banners, wait for the flight results to load, and extract the airline, total price, layover summary, and total travel time for the top three visible flight cards."
+      },
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "browser",
+        "output": {
+          "url": "https://www.google.com/travel/flights?q=Flights+from+Bengaluru+to+London+on+2026-06-25+through+2026-06-30",
+          "goal": "Dismiss any consent banners, wait for the flight results to load, and extract the airline, total price, layover summary, and total travel time for the top three visible flight cards.",
+          "path": "vision",
+          "turns": 4,
+          "content": "Search results\n13 results returned.\nBest\nLooking for stress-free travel? These flights are chosen to balance price and convenience, taking into account factors such as duration and number of stops to keep your journey smooth and affordable.\n[Learn more](https://support.google.com/travel/answer/7664728?ref_topic=2475360&hl=en-US)Cheapest\nfrom \u00a3536\nFetching results\nLooking for the lowest fares? These additional budget picks help you save but may involve trade-offs, such as flying back to a different airport in the same city you departed from, self-transferring luggage, or booking via a third-party site.\n[Learn more](https://support.google.com/travel/answer/7664728?ref_topic=2475360&hl=en-US)Top departing flights\nRanked based on price and conveniencePrices include required taxes + fees for 1 adult. Optional charges and bag fees may apply. Passenger assistance info.\n\u201cTop flights\u201d are ranked based on the best trade-off between price and convenience factors such as duration, number of stops, and airport changes during layovers. All other flights are ranked by price. [Learn more](https://support.google.com/travel/answer/7664728?ref_topic=2475360&hl=en-US)\n- 4:35 AM \u2013 12:45 PMEtihad12 hr 40 min1 stop1 hr 10 min AUH\u00a3536round tripDepartureThu, Jun 25\u00a3536round trip4:35 AMBLR12:45 PMLHR\u00a3536round trip1 stop in AUH1 stop12 hr 40 minEtihad\n- 10:15 PM \u2013 7:00 AM+1Etihad13 hr 15 min1 stop1 hr 45 min AUH\u00a3539round tripDepartureThu, Jun 25\u00a3539round trip10:15 PMBLR7:00 AM+1LHR\u00a3539round trip1 stop in AUH1 stop13 hr 15 minEtihad\n- 6:50 AM \u2013 1:15 PMBritish Airways10 hr 55 minNonstop\u00a3706round tripDepartureThu, Jun 25\u00a3706round trip6:50 AMBLR1:15 PMLHR\u00a3706round tripNonstopNonstop10 hr 55 minBritish Airways\nPrice insights\nThe cheapest time to book is usually earlier, up to 5 months before takeoff\nPrices are currently typical\nTrack prices\nTrack prices from Bengaluru to London departing 2026-06-25 and returning 2026-06-30Track prices from Bengaluru to London - Any dates\nGet email updates when prices change for your searched dates. You\u2019ll also get travel tips by email.\nOr, track any dates to get regular email updates when prices are low for Bengaluru \u2013 London.\nOther departing flights\n- 4:55 PM \u2013 3:05 PM+1Etihad26 hr 40 min1 stop15 hr 25 min AUH\u00a3536round tripDepartureThu, Jun 25\u00a3536round trip4:55 PMBLR3:05 PM+1LHR\u00a3536round trip1 stop in AUH1 stop26 hr 40 minEtihad\n- 10:15 PM \u2013 6:45 PM+1Etihad25 hr1 stop13 hr 35 min AUH\u00a3536round tripDepartureThu, Jun 25\u00a3536round trip10:15 PMBLR6:45 PM+1LHR\u00a3536round trip1 stop in AUH1 stop25 hrEtihad\n- 10:00 PM \u2013 5:45 PM+1IndiGoOperated by Under Lease From Norse24 hr 15 min1 stop10 hr DEL\u00a3568round tripDepartureThu, Jun 25\u00a3568round trip10:00 PMBLR5:45 PM+1LHR\u00a3568round trip1 stop in DEL1 stop24 hr 15 minIndiGoOperated by Under Lease From Norse\n- 4:00 AM \u2013 6:00 PMQatar AirwaysBritish Airways18 hr 30 min1 stop7 hr 15 min DOH\u00a3591round tripDepartureThu, Jun 25\u00a3591round trip4:00 AMBLR6:00 PMLHR\u00a3591round trip1 stop in DOH1 stop18 hr 30 minQatar AirwaysBritish Airways\n- 10:30 AM \u2013 7:45 PMEmiratesQantas13 hr 45 min1 stop2 hr 15 min DXB\u00a3669round tripDepartureThu, Jun 25\u00a3669round trip10:30 AMBLR7:45 PMLGW\u00a3669round trip1 stop in DXB1 stop13 hr 45 minEmiratesQantas\n- 4:45 AM \u2013 12:55 PMEmirates12 hr 40 min1 stop1 hr 5 min DXB\u00a3701round tripDepartureThu, Jun 25\u00a3701round trip4:45 AMBLR12:55 PMSTN\u00a3701round trip1 stop in DXB1 stop12 hr 40 minEmirates\n- 1:45 PM \u2013 8:20 PMAir India11 hr 5 minNonstop\u00a3774round tripDepartureThu, Jun 25\u00a3774round trip1:45 PMBLR8:20 PMLHR\u00a3774round tripNonstopNonstop11 hr 5 minAir India\n- 8:00 AM \u2013 2:35 PMVirgin Atlantic11 hr 5 minNonstop\u00a3803round tripDepartureThu, Jun 25\u00a3803round trip8:00 AMBLR2:35 PMLHR\u00a3803round tripNonstopNonstop11 hr 5 minVirgin Atlantic\n- 3:00 AM \u2013 9:15 AMBritish Airways10 hr 45 minNonstop\u00a3858round tripDepartureThu, Jun 25\u00a3858round trip3:00 AMBLR9:15 AMLHR\u00a3858round tripNonstopNonstop10 hr 45 minBritish Airways\n- 2:50 PM \u2013 9:05 PMVirgin Atlantic10 hr 45 minNonstop\u00a3860round tripDepartureThu, Jun 25\u00a3860round trip2:50 PMBLR9:05 PMLHR\u00a3860round tripNonstopNonstop10 hr 45 minVirgin Atlantic",
+          "actions": [
+            {
+              "turn": 1,
+              "actions": [
+                {
+                  "type": "scroll",
+                  "direction": "down",
+                  "mark": 3
+                }
+              ],
+              "outcome": "ok"
+            },
+            {
+              "turn": 2,
+              "actions": [
+                {
+                  "type": "click",
+                  "mark": 2
+                }
+              ],
+              "outcome": "ok"
+            },
+            {
+              "turn": 3,
+              "actions": [
+                {
+                  "type": "scroll",
+                  "direction": "down",
+                  "mark": 0,
+                  "value": "500"
+                }
+              ],
+              "outcome": "ok"
+            },
+            {
+              "turn": 4,
+              "actions": [
+                {
+                  "type": "done",
+                  "success": true,
+                  "value": "Flight 1: Airline: Etihad, Price: 536 British pounds, Layover: 1 stop, Duration: 26 hr 40 min. Flight 2: Airline: Etihad, Price: 536 British pounds, Layover: 1 stop, Duration: 25 hr. Flight 3: Airline: IndiGo, Price: 568 British pounds, Layover: 1 stop, Duration: 24 hr 15 min."
+                }
+              ],
+              "outcome": "done(True)"
+            }
+          ],
+          "final_url": "https://www.google.com/travel/flights?q=Flights+from+Bengaluru+to+London+on+2026-06-25+through+2026-06-30"
+        },
+        "artifacts": [],
+        "successors": [],
+        "cost": 0.001078,
+        "elapsed_s": 37.19372320175171,
+        "provider": "gemini",
+        "error": null,
+        "error_code": null
+      },
+      "_result_typed": true,
+      "id": "n:6"
+    },
+    {
+      "skill": "distiller",
+      "inputs": [
+        "n:6"
+      ],
+      "metadata": {
+        "label": "d1",
+        "question": "Extract the top 3 flight results into a structured list containing: airline, price, layover, and total travel time."
+      },
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "distiller",
+        "output": {
+          "fields": {
+            "flight_1": {
+              "airline": "Etihad",
+              "price": "\u00a3536",
+              "layover": "1 stop in AUH",
+              "total_travel_time": "12 hr 40 min"
+            },
+            "flight_2": {
+              "airline": "Etihad",
+              "price": "\u00a3539",
+              "layover": "1 stop in AUH",
+              "total_travel_time": "13 hr 15 min"
+            },
+            "flight_3": {
+              "airline": "British Airways",
+              "price": "\u00a3706",
+              "layover": "Nonstop",
+              "total_travel_time": "10 hr 55 min"
+            }
+          },
+          "rationale": "The top three flight results were extracted from the browser output provided in the input, sorted by price as requested."
+        },
+        "artifacts": [],
+        "successors": [],
+        "cost": 0.0,
+        "elapsed_s": 4.855758428573608,
+        "provider": "gemini",
+        "error": null,
+        "error_code": null
+      },
+      "_result_typed": true,
+      "id": "n:7"
+    },
+    {
+      "skill": "formatter",
+      "inputs": [
+        "USER_QUERY",
+        "n:7"
+      ],
+      "metadata": {
+        "label": "out"
+      },
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "formatter",
+        "output": {
+          "final_answer": "Here are the top three flight options from Bengaluru (BLR) to London (LHR) for the requested dates, sorted by price:\n\n| Rank | Airline | Price | Layover | Total Travel Time |\n| :--- | :--- | :--- | :--- | :--- |\n| 1 | Etihad | \u00a3536 | AUH | 12 hr 40 min |\n| 2 | Etihad | \u00a3539 | AUH | 13 hr 15 min |\n| 3 | British Airways | \u00a3706 | Nonstop | 10 hr 55 min |\n\nRecommendation: If you prioritize convenience and speed over cost, the British Airways flight is the best choice as it is the only nonstop option and offers the shortest travel time."
+        },
+        "artifacts": [],
+        "successors": [],
+        "cost": 0.0,
+        "elapsed_s": 3.407475471496582,
+        "provider": "gemini",
+        "error": null,
+        "error_code": null
+      },
+      "_result_typed": true,
+      "id": "n:8"
+    },
+    {
+      "skill": "critic",
+      "inputs": [
+        "USER_QUERY",
+        "n:7"
+      ],
+      "metadata": {
+        "target": "n:7",
+        "child": "n:8"
+      },
+      "status": "complete",
+      "result": {
+        "success": true,
+        "agent_name": "critic",
+        "output": {},
+        "artifacts": [],
+        "successors": [],
+        "cost": 0.0,
+        "elapsed_s": 3.853703737258911,
+        "provider": "groq",
+        "error": null,
+        "error_code": null
+      },
+      "_result_typed": true,
+      "id": "n:9"
+    }
+  ],
+  "edges": [
+    {
+      "source": "n:1",
+      "target": "n:2"
+    },
+    {
+      "source": "n:2",
+      "target": "n:3"
+    },
+    {
+      "source": "n:3",
+      "target": "n:4"
+    },
+    {
+      "source": "n:5",
+      "target": "n:6"
+    },
+    {
+      "source": "n:6",
+      "target": "n:7"
+    },
+    {
+      "source": "n:7",
+      "target": "n:9"
+    },
+    {
+      "source": "n:9",
+      "target": "n:8"
+    }
+  ]
+}

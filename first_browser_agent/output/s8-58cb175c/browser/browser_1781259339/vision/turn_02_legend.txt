@@ -1,0 +1,12 @@
+[1]<a>cookies</a>
+[2]<button>Reject all</button>
+[3]<button>Accept all</button>
+[4]<a>More options for personalization settings and cookies</a>
+[5]<a>Privacy Policy</a>
+[6]<a>Terms of Service</a>
+[7]<span></span>
+[8]<span>More options</span>
+[9]<span></span>
+[10]<span>Privacy Policy</span>
+[11]<span></span>
+[12]<span>Terms of Service</span>

@@ -1,0 +1,22 @@
+{
+  "node_id": "n:2",
+  "skill": "browser",
+  "status": "failed",
+  "inputs": [],
+  "result": {
+    "success": false,
+    "agent_name": "browser",
+    "output": {},
+    "artifacts": [],
+    "successors": [],
+    "cost": 0.0,
+    "elapsed_s": 0.0,
+    "provider": "",
+    "error": "exception: Error: Page.evaluate: Execution context was destroyed, most likely because of a navigation",
+    "error_code": null
+  },
+  "prompt_sent": "(exception before prompt-render)",
+  "started_at": 1781259336.3291106,
+  "completed_at": 1781259336.3291106,
+  "retries": 0
+}
