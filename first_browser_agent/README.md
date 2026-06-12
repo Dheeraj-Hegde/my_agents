@@ -7,7 +7,7 @@ comparison table plus a self-contained replay viewer.
 All eight sections are emitted by [html_replay.py](html_replay.py) into a
 single offline-viewable file at
 [output/s8-58cb175c/output/report.html](output/s8-58cb175c/output/report.html),
-and narrated by [make_demo_video.py](make_demo_video.py) into
+video -
 [output/s8-58cb175c/output/demo.mp4](output/s8-58cb175c/output/demo.mp4).
 
 ---
@@ -104,7 +104,6 @@ llm_gatewayV9/         # auto-launched LLM gateway (port 8109)
 recovery.py            # plan_recovery + handle_critic_verdict
 persistence.py         # per-node JSON + screenshot writers
 html_replay.py         # 8-section self-contained HTML report
-make_demo_video.py     # narrated MP4 with click overlays
 state/sessions/<sid>/  # one folder per run
   query.txt
   graph.json
@@ -127,9 +126,8 @@ $env:PYTHONIOENCODING = "utf-8"
 # End-to-end orchestrator run (gateway auto-launches on port 8109)
 uv run python flow.py "Today is 12 June 2026. Compare flights from Bengaluru (BLR) to London (LHR), depart 25 June 2026, return 30 June 2026. Use deep-link https://www.google.com/travel/flights?q=Flights+from+Bengaluru+to+London+on+2026-06-25+through+2026-06-30 . Read the top 3 results: airline, price, layover, total travel time. Flight numbers are NOT required. Return a Markdown table sorted cheapest first."
 
-# Generate the 8-section report + narrated video for the reference run
+# Generate the 8-section report for reference run
 uv run python html_replay.py     s8-58cb175c
-uv run python make_demo_video.py s8-58cb175c
 ```
 
 The orchestrator prints the session id on the first line. Reports and
