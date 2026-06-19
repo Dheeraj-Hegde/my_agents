@@ -33,6 +33,9 @@ first_browser_agent/booking_runner.py
 first_browser_agent/flight_run.log
 first_browser_agent/video_build.log
 first_browser_agent/make_demo_video.py
+first_computer_agent/.env
+first_computer_agent/make_demo_video.py
+first_computer_agent/record_demo.py
 
 # Video production temporary files
 narration.pcm

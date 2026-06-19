@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Computer-Use Dashboard</title>
+  <style>
+    /* ── design tokens (loosely mirroring the cua-agent demo card) ── */
+    :root {
+      --bg: #f6f7fb;
+      --ink: #1d2540;
+      --muted: #6c7693;
+      --soft: #e6eaf4;
+      --softer: #f2f4fb;
+      --line: #d8def0;
+      --accent: #2353ff;
+      --accent-soft: #e6edff;
+      --green: #1aa56b;
+      --red: #d3413a;
+      --amber: #d18a00;
+      --shadow: 0 6px 32px rgba(36, 54, 120, 0.10);
+      --radius: 14px;
+      --code-font: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: ui-sans-serif, -apple-system, "Segoe UI", Inter, system-ui, sans-serif;
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    a { color: var(--accent); text-decoration: none; }
+
+    /* ── layout ── */
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 32px 24px 56px; }
+    .title {
+      font-size: 26px; font-weight: 700; letter-spacing: -0.01em;
+      margin: 0 0 4px;
+    }
+    .subtitle {
+      color: var(--muted); font-style: italic; margin: 0 0 24px;
+    }
+
+    /* ── query bar ── */
+    .query {
+      display: flex; gap: 8px; align-items: stretch;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 10px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+    .query input[type=text] {
+      flex: 1;
+      border: 0;
+      outline: 0;
+      padding: 10px 12px;
+      font-size: 15px;
+      background: transparent;
+      color: var(--ink);
+    }
+    .query input[type=text]::placeholder { color: #99a2c0; }
+    button.primary {
+      background: var(--accent); color: white;
+      border: 0; border-radius: 10px;
+      padding: 10px 18px; font-weight: 600; cursor: pointer;
+      font-size: 14px;
+    }
+    button.primary:disabled { background: #9aaeff; cursor: progress; }
+    button.ghost {
+      background: white; color: var(--ink);
+      border: 1px solid var(--line); border-radius: 10px;
+      padding: 8px 12px; font-size: 13px; cursor: pointer;
+    }
+    button.ghost:hover { background: var(--softer); }
+    button.danger {
+      background: white; color: var(--red);
+      border: 1px solid #f0c5c2; border-radius: 10px;
+      padding: 8px 12px; font-size: 13px; cursor: pointer;
+    }
+
+    /* ── examples chips ── */
+    .examples { display: flex; flex-wrap: wrap; gap: 6px; margin: -8px 0 18px; }
+    .chip {
+      background: white; border: 1px solid var(--line);
+      border-radius: 999px; padding: 4px 12px;
+      font-size: 12px; color: var(--muted); cursor: pointer;
+    }
+    .chip:hover { color: var(--ink); border-color: #b8c2e0; }
+
+    /* ── session strip ── */
+    .row { display: flex; gap: 16px; align-items: flex-start; }
+    .col-sessions {
+      width: 260px; flex: 0 0 260px;
+    }
+    .col-main { flex: 1; min-width: 0; }
+    .panel {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+    .panel-h {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--line);
+      font-weight: 600; font-size: 13px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .panel-h .h-sub { color: var(--muted); font-weight: 400; font-size: 12px; }
+    .panel-b { padding: 10px 12px; }
+    .session-item {
+      padding: 8px 10px; border-radius: 8px; cursor: pointer;
+      display: flex; flex-direction: column; gap: 2px;
+      border: 1px solid transparent;
+    }
+    .session-item:hover { background: var(--softer); }
+    .session-item.active { background: var(--accent-soft); border-color: #c3d2ff; }
+    .session-item .q { font-size: 12px; color: var(--ink);
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .session-item .meta { font-size: 11px; color: var(--muted);
+      font-family: var(--code-font); }
+    .pill {
+      display: inline-block; font-size: 10.5px; padding: 1px 7px;
+      border-radius: 999px; font-weight: 600; letter-spacing: 0.02em;
+    }
+    .pill.running { background: #eaf2ff; color: var(--accent); }
+    .pill.done    { background: #e3f7ec; color: var(--green); }
+    .pill.failed  { background: #fde8e7; color: var(--red); }
+    .pill.idle    { background: var(--soft); color: var(--muted); }
+
+    /* ── agent chrome (mirrors the screenshot reference) ── */
+    .agent-card {
+      background: #eef1fa;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      margin-bottom: 18px;
+    }
+    .agent-strip {
+      display: flex; justify-content: space-between; align-items: center;
+      background: white;
+      border-radius: 10px 10px 0 0;
+      border: 1px solid var(--line); border-bottom: 0;
+      padding: 8px 14px;
+      font-size: 12.5px; color: var(--muted);
+      font-family: var(--code-font);
+    }
+    .agent-strip .badges { display: flex; gap: 12px; align-items: center; }
+    .agent-strip .badge-host { color: var(--ink); }
+    .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      display: inline-block; margin-right: 6px; vertical-align: middle;
+    }
+    .dot.green { background: var(--green); box-shadow: 0 0 0 3px #1aa56b22; }
+    .dot.amber { background: var(--amber); box-shadow: 0 0 0 3px #d18a0022; }
+    .dot.grey  { background: #b8bfd2; }
+
+    .agent-stage {
+      background: white;
+      border: 1px solid var(--line); border-radius: 0 0 10px 10px;
+      min-height: 360px;
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden;
+    }
+    .agent-stage img.frame {
+      max-width: 100%; max-height: 540px;
+      display: block;
+    }
+    .agent-stage .empty {
+      color: var(--muted); font-size: 13px; padding: 60px 20px;
+      text-align: center;
+    }
+
+    /* mac-style traffic lights, like the reference card */
+    .traffic { display: inline-flex; gap: 6px; margin-right: 12px; }
+    .traffic span {
+      width: 11px; height: 11px; border-radius: 50%;
+      display: inline-block;
+    }
+    .traffic .r { background: #ff5f57; }
+    .traffic .y { background: #febc2e; }
+    .traffic .g { background: #28c840; }
+
+    /* caption strip under the agent card */
+    .agent-caption {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 4px 0;
+      color: var(--muted); font-size: 13px;
+    }
+    .live-pill {
+      background: var(--accent-soft); color: var(--accent);
+      padding: 4px 10px; border-radius: 999px; font-size: 12px;
+      font-family: var(--code-font); font-weight: 600;
+    }
+
+    /* ── frame strip (thumbnails) ── */
+    .strip {
+      display: flex; gap: 8px; overflow-x: auto;
+      padding: 12px 14px;
+      border-top: 1px solid var(--line);
+      background: var(--softer);
+    }
+    .thumb {
+      flex: 0 0 auto;
+      border: 1px solid var(--line);
+      border-radius: 6px; overflow: hidden;
+      cursor: pointer; background: white;
+      width: 110px;
+    }
+    .thumb.active { border-color: var(--accent); box-shadow: 0 0 0 2px #c3d2ff; }
+    .thumb img { display: block; width: 110px; height: 66px; object-fit: cover; }
+    .thumb .lbl {
+      font-size: 10.5px; color: var(--muted);
+      padding: 4px 6px;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+
+    /* ── two-column bottom: events + log ── */
+    .bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .events-list, .log {
+      max-height: 380px; overflow: auto;
+      padding: 0; margin: 0; list-style: none;
+      font-family: var(--code-font); font-size: 12px;
+    }
+    .events-list li {
+      padding: 6px 12px; border-bottom: 1px solid var(--softer);
+      display: flex; gap: 8px; align-items: baseline;
+    }
+    .events-list .t { color: var(--muted); flex: 0 0 50px; }
+    .events-list .k {
+      flex: 0 0 92px; font-weight: 600; color: var(--ink);
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .events-list .pl { color: var(--muted); flex: 1; word-break: break-word; }
+    .events-list .layer {
+      flex: 0 0 70px; font-size: 11px;
+      background: var(--soft); border-radius: 4px;
+      padding: 1px 6px; text-align: center; color: var(--ink);
+    }
+    .events-list .layer.vision   { background: #ffe7b3; }
+    .events-list .layer.hotkeys  { background: #d4f0db; }
+    .events-list .layer.uia      { background: #e1d8ff; }
+    .events-list .layer.electron { background: #b3e0ff; }
+    .events-list .layer.api      { background: #ffd4e3; }
+
+    .log {
+      padding: 10px 14px; white-space: pre-wrap; color: var(--ink);
+      background: #fafbff;
+    }
+
+    .final-card {
+      background: white; border: 1px solid var(--line);
+      border-radius: var(--radius); padding: 14px 16px;
+      box-shadow: var(--shadow); margin-top: 16px;
+    }
+    .final-card h3 {
+      margin: 0 0 6px; font-size: 13px; color: var(--muted);
+      font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em;
+    }
+    .final-card .body {
+      font-size: 15px; color: var(--ink);
+    }
+
+    @media (max-width: 980px) {
+      .row { flex-direction: column; }
+      .col-sessions { width: 100%; }
+      .bottom { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1 class="title">An agent at your keyboard</h1>
+    <p class="subtitle">Watch the loop: scan → act → verify. Same cursor, your desktop, no human input.</p>
+
+    <div class="query">
+      <input id="query" type="text"
+             placeholder='e.g. "Open the Windows Calculator and compute 15350 + 2150"'
+             autocomplete="off" />
+      <button id="run-btn" class="primary">Run</button>
+    </div>
+    <div class="examples" id="examples"></div>
+
+    <div class="row">
+      <!-- left rail: session history -->
+      <aside class="col-sessions">
+        <div class="panel">
+          <div class="panel-h">
+            Sessions
+            <button id="refresh-btn" class="ghost" style="padding:2px 8px; font-size:11px;">↻</button>
+          </div>
+          <div class="panel-b" id="sessions"></div>
+        </div>
+      </aside>
+
+      <!-- main column -->
+      <main class="col-main">
+        <!-- agent card -->
+        <div class="agent-card">
+          <div class="agent-strip">
+            <div class="badges">
+              <div class="traffic"><span class="r"></span><span class="y"></span><span class="g"></span></div>
+              <span><b>cua-agent</b></span>
+              <span><span class="dot grey" id="daemon-dot"></span><span id="daemon-text">daemon: idle</span></span>
+              <span>trajectory: <span id="traj-name">—</span></span>
+            </div>
+            <div class="badges">
+              <span class="badge-host" id="task-name">—</span>
+              <span id="host-os">Windows</span>
+            </div>
+          </div>
+          <div class="agent-stage" id="stage">
+            <div class="empty">
+              Submit a query above. The agent's screenshots will appear here, one per scan-act-verify turn.
+            </div>
+          </div>
+          <div class="strip" id="strip"></div>
+        </div>
+
+        <div class="agent-caption">
+          <span id="caption-text">Scan a step, run it, verify the post-condition. The dashboard polls the trajectory directory each second.</span>
+          <span class="live-pill" id="live-pill">idle</span>
+        </div>
+
+        <div class="final-card" id="final-card" style="display:none;">
+          <h3>Final answer</h3>
+          <div class="body" id="final-body"></div>
+        </div>
+
+        <div class="bottom" style="margin-top:18px;">
+          <div class="panel">
+            <div class="panel-h">Events <span class="h-sub" id="ev-count">0</span></div>
+            <ul class="events-list" id="events"></ul>
+          </div>
+          <div class="panel">
+            <div class="panel-h">Orchestrator log <span class="h-sub" id="log-len">0 B</span></div>
+            <pre class="log" id="log"></pre>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    // ── state ─────────────────────────────────────────────────────────────
+    const STATE = {
+      sid: null,
+      task: null,
+      activeFrame: null,   // {rel, name, label}
+      pollHandle: null,
+      autoSelectLatestFrame: true,
+    };
+
+    const EXAMPLES = [
+      "Open the Windows Calculator and compute 15350 + 2150",
+      "Compute 999 * 17 in the Calculator and read the result",
+      "What is the capital of France?", // text-only, flows through researcher
+    ];
+
+    // ── helpers ───────────────────────────────────────────────────────────
+    const $ = (id) => document.getElementById(id);
+    const fmtBytes = (n) => n < 1024 ? `${n} B` : `${(n/1024).toFixed(1)} KB`;
+    const fmtTime = (ts) => {
+      if (!ts) return "—";
+      const d = new Date(ts * 1000);
+      return d.toLocaleTimeString();
+    };
+
+    function getJSON(url, opts={}) {
+      return fetch(url, opts).then(r => {
+        if (!r.ok) throw new Error(`${url} → ${r.status}`);
+        return r.json();
+      });
+    }
+
+    function renderExamples() {
+      const root = $("examples");
+      root.innerHTML = "";
+      EXAMPLES.forEach(q => {
+        const c = document.createElement("button");
+        c.className = "chip";
+        c.textContent = q;
+        c.onclick = () => { $("query").value = q; };
+        root.appendChild(c);
+      });
+    }
+
+    async function loadSessions() {
+      const { sessions } = await getJSON("/api/sessions");
+      const root = $("sessions");
+      root.innerHTML = "";
+      if (!sessions.length) {
+        root.innerHTML = '<div style="color:var(--muted);font-size:12px;padding:6px 4px;">No runs yet.</div>';
+        return;
+      }
+      sessions.slice(0, 25).forEach(s => {
+        const div = document.createElement("div");
+        div.className = "session-item" + (s.sid === STATE.sid ? " active" : "");
+        const status = s.status || "idle";
+        div.innerHTML = `
+          <div class="q" title="${escapeHtml(s.query || '')}">${escapeHtml(s.query || '(no query)')}</div>
+          <div class="meta">
+            <span class="pill ${status}">${status}</span>
+            ${s.sid}
+          </div>`;
+        div.onclick = () => selectSession(s.sid);
+        root.appendChild(div);
+      });
+    }
+
+    function escapeHtml(s) {
+      if (s == null) return "";
+      return String(s)
+        .replaceAll("&","&amp;").replaceAll("<","&lt;")
+        .replaceAll(">","&gt;").replaceAll('"',"&quot;");
+    }
+
+    function setDaemon(state) {
+      // state ∈ { idle, running, ok, failed }
+      const dot = $("daemon-dot"), txt = $("daemon-text"), pill = $("live-pill");
+      dot.className = "dot " + ({running:"amber", ok:"green", failed:"grey", idle:"grey"}[state] || "grey");
+      txt.textContent = "daemon: " + ({running:"running", ok:"connected", failed:"failed", idle:"idle"}[state] || "idle");
+      pill.textContent = state;
+      pill.style.background = (state === "ok") ? "#e3f7ec" :
+                              (state === "running") ? "var(--accent-soft)" :
+                              (state === "failed") ? "#fde8e7" : "var(--soft)";
+      pill.style.color = (state === "ok") ? "var(--green)" :
+                         (state === "running") ? "var(--accent)" :
+                         (state === "failed") ? "var(--red)" : "var(--muted)";
+    }
+
+    async function selectSession(sid) {
+      STATE.sid = sid;
+      STATE.task = null;
+      STATE.activeFrame = null;
+      STATE.autoSelectLatestFrame = true;
+      $("caption-text").textContent = `Showing session ${sid}.`;
+      loadSessions();
+      await refreshSession();
+      // (re)start polling
+      if (STATE.pollHandle) clearInterval(STATE.pollHandle);
+      STATE.pollHandle = setInterval(refreshSession, 800);
+    }
+
+    async function refreshSession() {
+      if (!STATE.sid) return;
+      let data;
+      try {
+        data = await getJSON(`/api/sessions/${STATE.sid}`);
+      } catch (exc) {
+        $("caption-text").textContent = "Failed to fetch session: " + exc;
+        return;
+      }
+      const { meta, log, tasks } = data;
+
+      // header / status
+      $("traj-name").textContent = STATE.sid;
+      $("log").textContent = log || "";
+      $("log-len").textContent = fmtBytes((log || "").length);
+      // Auto-scroll log to bottom.
+      const logEl = $("log");
+      logEl.scrollTop = logEl.scrollHeight;
+
+      // daemon state
+      const st = meta.status || "running";
+      if (st === "running") setDaemon("running");
+      else if (st === "done") setDaemon("ok");
+      else setDaemon("failed");
+
+      // final answer
+      if (meta.final_answer) {
+        $("final-card").style.display = "";
+        $("final-body").textContent = meta.final_answer;
+      } else {
+        $("final-card").style.display = "none";
+      }
+
+      // pick the latest task with frames; if none yet, fall back to the
+      // last one in order.
+      let target = null;
+      for (const t of tasks) {
+        if (t.frame_count > 0) target = t;
+      }
+      if (!target && tasks.length) target = tasks[tasks.length - 1];
+      if (target) {
+        const sameTask = (STATE.task === target.task);
+        STATE.task = target.task;
+        $("task-name").textContent = target.task;
+        await refreshTask(target.task, /*resetActive=*/!sameTask);
+      } else {
+        $("task-name").textContent = "(waiting for first task)";
+        $("events").innerHTML = "";
+        $("strip").innerHTML = "";
+        $("stage").innerHTML = '<div class="empty">Planner is running. Frames will appear once a task starts.</div>';
+      }
+
+      // stop polling on terminal states
+      if (st !== "running" && STATE.pollHandle) {
+        clearInterval(STATE.pollHandle);
+        STATE.pollHandle = null;
+      }
+    }
+
+    async function refreshTask(task, resetActive) {
+      if (resetActive) {
+        STATE.activeFrame = null;
+        STATE.autoSelectLatestFrame = true;
+      }
+      const [framesResp, eventsResp] = await Promise.all([
+        getJSON(`/api/sessions/${STATE.sid}/tasks/${task}/frames`),
+        getJSON(`/api/sessions/${STATE.sid}/tasks/${task}/events`),
+      ]);
+      renderFrames(framesResp.frames || []);
+      renderEvents(eventsResp.events || []);
+    }
+
+    function renderFrames(frames) {
+      const strip = $("strip");
+      strip.innerHTML = "";
+      if (!frames.length) {
+        $("stage").innerHTML = '<div class="empty">No screenshots yet for this task.</div>';
+        return;
+      }
+      // Choose which frame to show in the stage.
+      let activeIdx = -1;
+      if (STATE.activeFrame) {
+        activeIdx = frames.findIndex(f => f.rel === STATE.activeFrame.rel);
+      }
+      if (activeIdx < 0 || STATE.autoSelectLatestFrame) {
+        activeIdx = frames.length - 1;
+        STATE.activeFrame = frames[activeIdx];
+      }
+      // strip thumbnails
+      frames.forEach((f, i) => {
+        const div = document.createElement("div");
+        div.className = "thumb" + (i === activeIdx ? " active" : "");
+        div.innerHTML = `
+          <img src="/api/frame?rel=${encodeURIComponent(f.rel)}" alt="" loading="lazy" />
+          <div class="lbl" title="${escapeHtml(f.label)}">${escapeHtml(f.label || f.name)}</div>`;
+        div.onclick = () => {
+          STATE.activeFrame = f;
+          STATE.autoSelectLatestFrame = false;
+          renderFrames(frames);
+        };
+        strip.appendChild(div);
+      });
+      // stage
+      const f = frames[activeIdx];
+      $("stage").innerHTML = `
+        <img class="frame" src="/api/frame?rel=${encodeURIComponent(f.rel)}" alt="${escapeHtml(f.label)}" />`;
+    }
+
+    function renderEvents(events) {
+      const root = $("events");
+      root.innerHTML = "";
+      $("ev-count").textContent = events.length + " event(s)";
+      // Render newest LAST so the panel reads top→bottom in time order.
+      for (const ev of events) {
+        const li = document.createElement("li");
+        const layer = ev.layer || "";
+        li.innerHTML = `
+          <span class="t">${(ev.t ?? "").toString().padStart(6)}s</span>
+          <span class="k">${escapeHtml(ev.kind || "")}</span>
+          <span class="layer ${layer}">${escapeHtml(layer)}</span>
+          <span class="pl">${escapeHtml(summarisePayload(ev))}</span>`;
+        root.appendChild(li);
+      }
+      root.scrollTop = root.scrollHeight;
+    }
+
+    function summarisePayload(ev) {
+      // Compact one-line summary of the event payload.
+      const drop = new Set(["t", "kind", "layer", "file"]);
+      const parts = [];
+      for (const [k, v] of Object.entries(ev)) {
+        if (drop.has(k)) continue;
+        if (v == null) continue;
+        let s;
+        if (typeof v === "object") s = JSON.stringify(v);
+        else s = String(v);
+        if (s.length > 80) s = s.slice(0, 80) + "…";
+        parts.push(`${k}=${s}`);
+      }
+      return parts.join("  ");
+    }
+
+    // ── actions ───────────────────────────────────────────────────────────
+    async function runQuery() {
+      const q = $("query").value.trim();
+      if (!q) return;
+      $("run-btn").disabled = true;
+      try {
+        const resp = await getJSON("/api/run", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({ query: q }),
+        });
+        await selectSession(resp.sid);
+      } catch (exc) {
+        alert("Run failed: " + exc);
+      } finally {
+        $("run-btn").disabled = false;
+      }
+    }
+
+    // ── boot ──────────────────────────────────────────────────────────────
+    renderExamples();
+    loadSessions();
+    $("run-btn").onclick = runQuery;
+    $("query").addEventListener("keydown", (e) => {
+      if (e.key === "Enter") runQuery();
+    });
+    $("refresh-btn").onclick = () => { loadSessions(); refreshSession(); };
+    setDaemon("idle");
+  </script>
+</body>
+</html>

@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>VISION TARGET GAME</title>
+<style>
+  /* High-contrast styling on purpose: Layer-3 vision performs best
+     against a clean white background with one bold red target.
+     Cells are huge (≈400x300 each) so click-coordinate guesses by
+     the VLM tolerate ±60 px slop without leaving the cell. */
+  html, body {
+    margin: 0; padding: 0;
+    height: 100%; width: 100%;
+    background: #ffffff;
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #1d2540;
+    overflow: hidden;
+  }
+  #scorebar {
+    height: 90px;
+    display: flex; align-items: center; justify-content: center;
+    background: #1d2540;
+    color: #ffffff;
+    font-size: 56px; font-weight: 700;
+    letter-spacing: 4px;
+  }
+  #grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 28px;
+    padding: 28px;
+    height: calc(100vh - 90px - 56px);
+    box-sizing: border-box;
+  }
+  .cell {
+    background: #f1f3fa;
+    border: 6px solid #d6dbef;
+    border-radius: 24px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 64px; font-weight: 800;
+    user-select: none; cursor: pointer;
+  }
+  .cell.target {
+    background: #fff1f1;
+    border-color: #c40000;
+  }
+  .cell.target .dot {
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: #c40000;
+    box-shadow: 0 0 0 16px #ffd2d2;
+  }
+  .cell.target .label {
+    margin-top: 24px;
+    color: #c40000;
+    font-size: 64px;
+    letter-spacing: 6px;
+  }
+  .cell .inner {
+    display: flex; flex-direction: column; align-items: center;
+  }
+  #win {
+    height: 100vh;
+    display: none;
+    align-items: center; justify-content: center;
+    flex-direction: column;
+    background: #16a34a;
+    color: #ffffff;
+    text-align: center;
+  }
+  #win.show { display: flex; }
+  #win .big {
+    font-size: 200px; font-weight: 900;
+    letter-spacing: 16px;
+    text-shadow: 0 4px 0 #0e6b30;
+  }
+  #win .sub {
+    margin-top: 28px;
+    font-size: 64px; font-weight: 700;
+    letter-spacing: 8px;
+  }
+  #footer {
+    height: 56px;
+    display: flex; align-items: center; justify-content: center;
+    background: #f6f7fb;
+    color: #5b6b8c;
+    font-size: 22px; letter-spacing: 2px;
+  }
+</style>
+</head>
+<body>
+  <div id="scorebar">SCORE&nbsp;&nbsp;<span id="score">0</span>&nbsp;/&nbsp;3</div>
+  <div id="grid">
+    <div class="cell" data-idx="0"><div class="inner"></div></div>
+    <div class="cell" data-idx="1"><div class="inner"></div></div>
+    <div class="cell" data-idx="2"><div class="inner"></div></div>
+    <div class="cell" data-idx="3"><div class="inner"></div></div>
+  </div>
+  <div id="footer">CLICK THE RED TARGET</div>
+
+  <div id="win">
+    <div class="big">YOU WIN</div>
+    <div class="sub">SCORE&nbsp;3&nbsp;OF&nbsp;3</div>
+  </div>
+
+<script>
+/* Vision-friendly mini-game:
+ *   - 2x2 grid; exactly one cell is the "target" each round (big red
+ *     dot + the word CLICK). The other three are empty.
+ *   - A click on the target advances the score; any click elsewhere is
+ *     silently ignored so a stray VLM click cannot end the game early.
+ *   - After 3 successful hits, the grid is replaced by a full-screen
+ *     "YOU WIN" panel painted in solid green. The vision model is
+ *     instructed to finish as soon as it sees that screen.
+ *   - Target placement is pseudo-random but always moves to a
+ *     different cell from the previous round so the agent must
+ *     actually re-look at the screen each turn.
+ */
+const cells = Array.from(document.querySelectorAll('#grid .cell'));
+const scoreEl = document.getElementById('score');
+const winEl = document.getElementById('win');
+let score = 0;
+let targetIdx = -1;
+
+function placeTarget() {
+  let idx;
+  do { idx = Math.floor(Math.random() * cells.length); }
+  while (idx === targetIdx);
+  targetIdx = idx;
+  cells.forEach((c, i) => {
+    c.classList.toggle('target', i === idx);
+    c.querySelector('.inner').innerHTML =
+      (i === idx)
+        ? '<div class="dot"></div><div class="label">CLICK</div>'
+        : '';
+  });
+}
+
+function showWin() {
+  document.getElementById('grid').style.display = 'none';
+  document.getElementById('footer').style.display = 'none';
+  document.getElementById('scorebar').style.display = 'none';
+  winEl.classList.add('show');
+}
+
+cells.forEach(c => {
+  c.addEventListener('click', () => {
+    const idx = Number(c.dataset.idx);
+    if (idx !== targetIdx) return;       // missed clicks are silent
+    score += 1;
+    scoreEl.textContent = String(score);
+    if (score >= 3) { showWin(); return; }
+    // Small delay before re-placing so the agent's next screenshot
+    // reliably captures the new target rather than the old one.
+    setTimeout(placeTarget, 450);
+  });
+});
+
+placeTarget();
+</script>
+</body>
+</html>
